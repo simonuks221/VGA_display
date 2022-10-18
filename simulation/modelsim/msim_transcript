@@ -1,0 +1,385 @@
+# Reading C:/intelFPGA_lite/17.0/modelsim_ase/tcl/vsim/pref.tcl
+# do VGA_Graphics_run_msim_rtl_vhdl.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 10.5b Lib Mapping Utility 2016.10 Oct  5 2016
+# vmap work rtl_work 
+# Copying C:/intelFPGA_lite/17.0/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vcom -93 -work work {C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd}
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 21:45:25 on Oct 18,2022
+# vcom -reportprogress 300 -93 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_Sync
+# -- Compiling architecture arc of VGA_Sync
+# End time: 21:45:25 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd}
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 21:45:25 on Oct 18,2022
+# vcom -reportprogress 300 -93 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_SyncTimer
+# -- Compiling architecture arc of VGA_SyncTimer
+# End time: 21:45:25 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 21:45:32 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity TB
+# -- Compiling architecture arc of TB
+# ** Warning: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd(36): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd(38): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# End time: 21:45:32 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 21:45:32 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_Sync
+# -- Compiling architecture arc of VGA_Sync
+# End time: 21:45:32 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 21:45:32 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_SyncTimer
+# -- Compiling architecture arc of VGA_SyncTimer
+# End time: 21:45:32 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vsim work.tb
+# vsim work.tb 
+# Start time: 21:45:35 on Oct 18,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.tb(arc)
+# Loading work.vga_sync(arc)
+# Loading work.vga_synctimer(arc)
+add wave -position end  sim:/tb/R
+add wave -position end  sim:/tb/G
+add wave -position end  sim:/tb/B
+add wave -position end  sim:/tb/V
+add wave -position end  sim:/tb/H
+run
+run
+write format list -window .main_pane.list.interior.cs.body C:/Users/simon/Desktop/UNI/VHDL/VGA/simulation/modelsim/list.do
+write tssi -window .main_pane.list.interior.cs.body C:/Users/simon/Desktop/UNI/VHDL/VGA/simulation/modelsim/list.lst
+# after#5088
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:09:39 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_Sync
+# -- Compiling architecture arc of VGA_Sync
+# End time: 22:09:39 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:09:51 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity TB
+# -- Compiling architecture arc of TB
+# ** Warning: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd(36): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd(38): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# End time: 22:09:51 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+vsim work.tb
+# End time: 22:09:55 on Oct 18,2022, Elapsed time: 0:24:20
+# Errors: 0, Warnings: 2
+# vsim work.tb 
+# Start time: 22:09:55 on Oct 18,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.tb(arc)
+# Loading work.vga_sync(arc)
+# Loading work.vga_synctimer(arc)
+add wave -position end  sim:/tb/R
+add wave -position end  sim:/tb/G
+add wave -position end  sim:/tb/B
+add wave -position end  sim:/tb/V
+add wave -position end  sim:/tb/H
+run
+run
+run
+run
+run
+run
+run
+write tssi -window .main_pane.list.interior.cs.body C:/Users/simon/Desktop/UNI/VHDL/VGA/simulation/list.lst
+# after#9668
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:19:29 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity TB
+# -- Compiling architecture arc of TB
+# ** Warning: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd(36): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd(38): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# End time: 22:19:29 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:19:29 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_Sync
+# -- Compiling architecture arc of VGA_Sync
+# ** Error: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd(46): (vcom-1581) No feasible entries for infix operator '<'.
+# ** Error: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd(46): (vcom-1136) Unknown identifier "unsigned".
+# ** Error: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd(56): VHDL Compiler exiting
+# End time: 22:19:29 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:19:29 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_SyncTimer
+# -- Compiling architecture arc of VGA_SyncTimer
+# End time: 22:19:29 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:19:32 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_Sync
+# -- Compiling architecture arc of VGA_Sync
+# ** Error: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd(46): (vcom-1581) No feasible entries for infix operator '<'.
+# ** Error: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd(46): (vcom-1136) Unknown identifier "unsigned".
+# ** Error: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd(56): VHDL Compiler exiting
+# End time: 22:19:32 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:19:50 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity TB
+# -- Compiling architecture arc of TB
+# ** Warning: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd(36): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd(38): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# End time: 22:19:50 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:19:52 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_Sync
+# -- Compiling architecture arc of VGA_Sync
+# ** Error: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd(46): (vcom-1136) Unknown identifier "unsigned".
+# ** Error: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd(46): Type error resolving infix expression "<" as type std.STANDARD.BOOLEAN.
+# ** Error: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd(56): VHDL Compiler exiting
+# End time: 22:19:52 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:20:02 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_Sync
+# -- Compiling architecture arc of VGA_Sync
+# End time: 22:20:02 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vsim work.tb
+# End time: 22:20:07 on Oct 18,2022, Elapsed time: 0:10:12
+# Errors: 9, Warnings: 4
+# vsim work.tb 
+# Start time: 22:20:07 on Oct 18,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.tb(arc)
+# Loading work.vga_sync(arc)
+# Loading work.vga_synctimer(arc)
+add wave -position end  sim:/tb/R
+add wave -position end  sim:/tb/G
+add wave -position end  sim:/tb/B
+add wave -position end  sim:/tb/V
+add wave -position end  sim:/tb/H
+run
+# ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 0  Instance: /tb/vgaSync
+write format list -window .main_pane.list.interior.cs.body C:/Users/simon/Desktop/UNI/VHDL/VGA/simulation/modelsim/list.do
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:23:33 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity TB
+# -- Compiling architecture arc of TB
+# ** Warning: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd(36): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd(38): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# End time: 22:23:33 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:23:33 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_Sync
+# -- Compiling architecture arc of VGA_Sync
+# End time: 22:23:33 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:23:33 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_SyncTimer
+# -- Compiling architecture arc of VGA_SyncTimer
+# End time: 22:23:33 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vsim work.tb
+# End time: 22:23:36 on Oct 18,2022, Elapsed time: 0:03:29
+# Errors: 0, Warnings: 3
+# vsim work.tb 
+# Start time: 22:23:36 on Oct 18,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.tb(arc)
+# Loading work.vga_sync(arc)
+# Loading work.vga_synctimer(arc)
+add wave -position end  sim:/tb/R
+add wave -position end  sim:/tb/G
+add wave -position end  sim:/tb/B
+add wave -position end  sim:/tb/V
+add wave -position end  sim:/tb/H
+run
+write tssi -window .main_pane.list.interior.cs.body C:/Users/simon/Desktop/UNI/VHDL/VGA/simulation/list.lst
+# after#14400
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:25:15 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity TB
+# -- Compiling architecture arc of TB
+# ** Warning: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd(36): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd(38): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# End time: 22:25:16 on Oct 18,2022, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:25:16 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_Sync
+# -- Compiling architecture arc of VGA_Sync
+# End time: 22:25:16 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:25:16 on Oct 18,2022
+# vcom -reportprogress 300 -work work C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity VGA_SyncTimer
+# -- Compiling architecture arc of VGA_SyncTimer
+# End time: 22:25:16 on Oct 18,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vsim work.tb
+# End time: 22:25:19 on Oct 18,2022, Elapsed time: 0:01:43
+# Errors: 0, Warnings: 2
+# vsim work.tb 
+# Start time: 22:25:19 on Oct 18,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.tb(arc)
+# Loading work.vga_sync(arc)
+# Loading work.vga_synctimer(arc)
+add wave -position end  sim:/tb/R
+add wave -position end  sim:/tb/G
+add wave -position end  sim:/tb/B
+add wave -position end  sim:/tb/V
+add wave -position end  sim:/tb/H
+run
+# ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 0  Instance: /tb/vgaSync
+write tssi -window .main_pane.list.interior.cs.body C:/Users/simon/Desktop/UNI/VHDL/VGA/simulation/list.lst
+# after#16122
+# End time: 22:34:32 on Oct 18,2022, Elapsed time: 0:09:13
+# Errors: 0, Warnings: 1
