@@ -9,16 +9,17 @@ Rout: out std_logic;
 Gout: out std_logic;
 Bout: out std_logic;
 Xout: out std_logic_vector(9 downto 0);
-Yout: out std_logic_vector(9 downto 0)
+Yout: out std_logic_vector(9 downto 0);
+WR: out std_logic
 );
 end entity;
 
 architecture arc of Rasteriser is
 type vector2D is array(0 to 1) of std_logic_vector(9 downto 0);
-signal x0 : signed(10 downto 0) := to_signed(0, 11);
-signal y0 : signed(10 downto 0) := to_signed(0, 11);
-signal x1 : signed(10 downto 0) := to_signed(7, 11);
-signal y1 : signed(10 downto 0) := to_signed(4, 11);
+signal x0 : signed(10 downto 0) := to_signed(10, 11);
+signal y0 : signed(10 downto 0) := to_signed(10, 11);
+signal x1 : signed(10 downto 0) := to_signed(630, 11);
+signal y1 : signed(10 downto 0) := to_signed(450, 11);
 
 
 signal inLoop: std_logic := '0';
@@ -71,6 +72,13 @@ dx <= abs(x1 - x0) when start = '1'; --BLOGAI, nera ABS
 sx <= to_signed(1, 11) when x0 < x1 else to_signed(-1, 11);
 dy <= -(y1 - y0) when start = '1';
 sy <= to_signed(1, 11) when y0 < y1 else to_signed(-1, 11);
+
+Rout <= '1' when inLoop = '1' else 'Z';
+Gout <= '0' when inLoop = '1' else 'Z';
+Bout <= '0' when inLoop = '1' else 'Z';
+Xout <= std_logic_vector(x0(9 downto 0)) when inLoop = '1' else (others => 'Z');
+Yout <= std_logic_vector(y0(9 downto 0)) when inLoop = '1' else (others => 'Z');
+WR <= inLoop;
 --error <= to_signed(7, 11);
 
 
