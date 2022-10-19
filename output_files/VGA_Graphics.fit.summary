@@ -1,4 +1,4 @@
-Fitter Status : Successful - Tue Oct 18 21:45:07 2022
+Fitter Status : Successful - Wed Oct 19 16:01:23 2022
 Quartus Prime Version : 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 Revision Name : VGA_Graphics
 Top-level Entity Name : VGA_Sync
@@ -6,10 +6,10 @@ Family : Arria II GX
 Device : EP2AGX45CU17I3
 Timing Models : Final
 Logic utilization : < 1 %
-    Combinational ALUTs : 87 / 36,100 ( < 1 % )
+    Combinational ALUTs : 90 / 36,100 ( < 1 % )
     Memory ALUTs : 0 / 18,050 ( 0 % )
-    Dedicated logic registers : 66 / 36,100 ( < 1 % )
-Total registers : 66
+    Dedicated logic registers : 79 / 36,100 ( < 1 % )
+Total registers : 79
 Total pins : 6 / 176 ( 3 % )
 Total virtual pins : 0
 Total block memory bits : 0 / 2,939,904 ( 0 % )
