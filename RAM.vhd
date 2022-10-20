@@ -4,8 +4,8 @@ use ieee.numeric_std.all;
 
 entity RAM is
 generic(
-ADDRESS_LENGTH: integer := 3;
-DATA_LENGTH: integer := 3
+ADDRESS_LENGTH: integer := 3; --bits
+DATA_LENGTH: integer := 10 --bits
 );
 port(
 CLK: in std_logic;
@@ -16,13 +16,25 @@ DATA_OUT : out std_logic_vector(DATA_LENGTH - 1 downto 0)
 end entity;
 
 architecture arc of RAM is
-type dataType is array(((ADDRESS_LENGTH**2) - 1) downto 0) of std_logic_vector(((DATA_LENGTH**2) - 1) downto 0);
+type dataType is array(((ADDRESS_LENGTH**2) - 1) downto 0) of std_logic_vector((DATA_LENGTH - 1) downto 0);
 
 function InitDummyData return dataType is
 	variable returnData : dataType;
 begin
-	returnData := (others => (others => '0'));
-	returnData(0) := "000000101";
+	returnData := (others => (others => '0')); --Init all data to 0
+	
+	returnData(0) := std_logic_vector(to_unsigned(2, DATA_LENGTH)); --We will have 3 lines
+	
+	returnData(1) := std_logic_vector(to_unsigned(0, DATA_LENGTH));
+	returnData(2) := std_logic_vector(to_unsigned(0, DATA_LENGTH));
+	returnData(3) := std_logic_vector(to_unsigned(630, DATA_LENGTH));
+	returnData(4) := std_logic_vector(to_unsigned(450, DATA_LENGTH));
+	
+	returnData(5) := std_logic_vector(to_unsigned(100, DATA_LENGTH));
+	returnData(6) := std_logic_vector(to_unsigned(400, DATA_LENGTH));
+	returnData(7) := std_logic_vector(to_unsigned(0, DATA_LENGTH));
+	returnData(8) := std_logic_vector(to_unsigned(300, DATA_LENGTH));
+	
 	return returnData;
 end function;
 

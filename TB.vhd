@@ -8,9 +8,7 @@ end entity;
 
 architecture arc of TB is
 signal VGACLK : std_logic;
-signal R : std_logic;
-signal G : std_logic;
-signal B : std_logic;
+signal RGB : std_logic_vector(0 to 2);
 signal V: std_logic;
 signal H: std_logic;
 signal Xcord: std_logic_vector(9 downto 0);
@@ -19,9 +17,7 @@ signal X : std_logic_vector(15 downto 0);
 signal Y : std_logic_vector(15 downto 0);
 
 signal WR: std_logic;
-signal Rin: std_logic;
-signal Gin: std_logic;
-signal Bin: std_logic;
+signal RGBbuffer : std_logic_vector(0 to 2);
 signal Xin: std_logic_vector(9 downto 0);
 signal Yin: std_logic_vector(9 downto 0);
 
@@ -32,17 +28,14 @@ signal EN_RASTERISATION: std_logic;
 signal DataRAMOut: std_logic_vector(2 downto 0);
 
 component Frame_Buffer is
-port(CLK: in std_logic;
-Rout: out std_logic;
-Gout: out std_logic;
-Bout: out std_logic;
+port(
+CLK: in std_logic;
+RGBout: out std_logic_vector(0 to 2);
 Xout: in std_logic_vector(9 downto 0);
 Yout: in std_logic_vector(9 downto 0);
 
 WR: in std_logic;
-Rin: in std_logic;
-Gin: in std_logic;
-Bin: in std_logic;
+RGBin: in std_logic_vector(0 to 2);
 Xin: in std_logic_vector(9 downto 0);
 Yin: in std_logic_vector(9 downto 0)
 );
@@ -63,9 +56,7 @@ component Rasteriser is
 port(
 EN: in std_logic;
 CLK: in std_logic;
-Rout: out std_logic;
-Gout: out std_logic;
-Bout: out std_logic;
+RGBout: out std_logic_vector(0 to 2);
 Xout: out std_logic_vector(9 downto 0);
 Yout: out std_logic_vector(9 downto 0);
 WR: out std_logic;
@@ -101,12 +92,17 @@ end component;
 
 begin
 DataRAM : RAM generic map(ADDRESS_LENGTH => 3, DATA_LENGTH => 3) port map(CLK => VGACLK, ADDRESS_IN => "000", DATA_OUT =>DataRAMOut);
-GraphicsPipelineSM : Graphics_pipeline_SM port map(EN => '1', RST => '0', CLK => VGACLK, DONE_RASTERISATION => DONE_RASTERISATION, 
+
+GraphicsPipelineSM : Graphics_pipeline_SM port map(EN => '1', RST => '0', CLK => VGACLK, 
+DONE_RASTERISATION => DONE_RASTERISATION, 
 EN_VGA => EN_VGA, EN_RASTERISATION => EN_RASTERISATION);
-lineRasteriser: Rasteriser port map(DONE_RASTERISATION => DONE_RASTERISATION, EN => EN_RASTERISATION, CLK => VGACLK, Rout => Rin, Gout => Gin, Bout => Bin, Xout => Xin, Yout => Yin, WR => WR);
+
+lineRasteriser: Rasteriser port map(DONE_RASTERISATION => DONE_RASTERISATION, EN => EN_RASTERISATION, 
+CLK => VGACLK, RGBout => RGBbuffer, Xout => Xin, Yout => Yin, WR => WR);
+
 vgaSync : VGA_Sync port map(EN => EN_VGA, X => X, Y => Y, VS => V, HS => H, CLK => VGACLK);
-frameBuffer: Frame_Buffer port map(CLK => VGACLK, Rout => R, Gout => G, Bout => B, Xout => Xcord, Yout => Ycord, 
-WR => WR, Rin => Rin, Gin => Gin, Bin => Bin, Xin => Xin, Yin => Yin);
+frameBuffer: Frame_Buffer port map(CLK => VGACLK, RGBout => RGB, Xout => Xcord, Yout => Ycord, 
+WR => WR, RGBin => RGBbuffer, Xin => Xin, Yin => Yin);
 
 Xcord <= X(9 downto 0);
 Ycord <= Y(9 downto 0);

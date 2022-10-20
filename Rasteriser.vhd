@@ -6,9 +6,7 @@ entity Rasteriser is
 port(
 EN: in std_logic;
 CLK: in std_logic;
-Rout: out std_logic;
-Gout: out std_logic;
-Bout: out std_logic;
+RGBout: out std_logic_vector(0 to 2);
 Xout: out std_logic_vector(9 downto 0);
 Yout: out std_logic_vector(9 downto 0);
 WR: out std_logic;
@@ -78,9 +76,7 @@ sx <= to_signed(1, 11) when x0 < x1 else to_signed(-1, 11);
 dy <= -(y1 - y0) when start = '1';
 sy <= to_signed(1, 11) when y0 < y1 else to_signed(-1, 11);
 
-Rout <= '1' when inLoop = '1' else 'Z';
-Gout <= '0' when inLoop = '1' else 'Z';
-Bout <= '0' when inLoop = '1' else 'Z';
+RGBout <= "100" when inLoop = '1' else "ZZZ";
 Xout <= std_logic_vector(x0(9 downto 0)) when inLoop = '1' else (others => 'Z');
 Yout <= std_logic_vector(y0(9 downto 0)) when inLoop = '1' else (others => 'Z');
 WR <= inLoop;
