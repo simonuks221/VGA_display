@@ -4,13 +4,15 @@ use ieee.numeric_std.all;
 
 entity Rasteriser is
 port(
+EN: in std_logic;
 CLK: in std_logic;
 Rout: out std_logic;
 Gout: out std_logic;
 Bout: out std_logic;
 Xout: out std_logic_vector(9 downto 0);
 Yout: out std_logic_vector(9 downto 0);
-WR: out std_logic
+WR: out std_logic;
+DONE_RASTERISATION: out std_logic
 );
 end entity;
 
@@ -31,7 +33,10 @@ process (CLK)
 variable error: integer := 0;
 variable e2 : integer := 0;
 begin
-	if rising_edge(CLK) then
+	if EN = '0' then
+		start <= '0';
+		inLoop <= '0';
+	elsif rising_edge(CLK) then
 		if start = '1' then
 			inLoop <= '1';
 			start <= '0';
@@ -80,6 +85,8 @@ Xout <= std_logic_vector(x0(9 downto 0)) when inLoop = '1' else (others => 'Z');
 Yout <= std_logic_vector(y0(9 downto 0)) when inLoop = '1' else (others => 'Z');
 WR <= inLoop;
 --error <= to_signed(7, 11);
+
+DONE_RASTERISATION <= '1' when inLoop = '0' and start = '0' else '0';
 
 
 

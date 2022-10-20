@@ -8,7 +8,6 @@ end entity;
 
 architecture arc of TB is
 signal VGACLK : std_logic;
-signal CLK : std_logic;
 signal R : std_logic;
 signal G : std_logic;
 signal B : std_logic;
@@ -25,6 +24,10 @@ signal Gin: std_logic;
 signal Bin: std_logic;
 signal Xin: std_logic_vector(9 downto 0);
 signal Yin: std_logic_vector(9 downto 0);
+
+signal DONE_RASTERISATION: std_logic;
+signal EN_VGA: std_logic;
+signal EN_RASTERISATION: std_logic;
 
 component Frame_Buffer is
 port(CLK: in std_logic;
@@ -45,6 +48,7 @@ end component;
 
 component VGA_Sync is
 port(
+EN: in std_logic;
 CLK: in std_logic;
 X: out std_logic_vector(15 downto 0);
 Y: out std_logic_vector(15 downto 0);
@@ -55,35 +59,41 @@ end component;
 
 component Rasteriser is
 port(
+EN: in std_logic;
 CLK: in std_logic;
 Rout: out std_logic;
 Gout: out std_logic;
 Bout: out std_logic;
 Xout: out std_logic_vector(9 downto 0);
 Yout: out std_logic_vector(9 downto 0);
-WR: out std_logic
+WR: out std_logic;
+DONE_RASTERISATION: out std_logic
 );
 end component;
 
-begin
+component Graphics_pipeline_SM is
+port(
+EN : in std_logic;
+RST: in std_logic;
+CLK : in std_logic;
 
-lineRasteriser: Rasteriser port map(CLK => VGACLK, Rout => Rin, Gout => Gin, Bout => Bin, Xout => Xin, Yout => Yin, WR => WR);
-vgaSync : VGA_Sync port map(X => X, Y => Y, VS => V, HS => H, CLK => VGACLK);
+DONE_RASTERISATION: in std_logic;
+
+EN_VGA: out std_logic;
+EN_RASTERISATION: out std_logic
+); 
+end component;
+
+begin
+GraphicsPipelineSM : Graphics_pipeline_SM port map(EN => '1', RST => '0', CLK => VGACLK, DONE_RASTERISATION => DONE_RASTERISATION, 
+EN_VGA => EN_VGA, EN_RASTERISATION => EN_RASTERISATION);
+lineRasteriser: Rasteriser port map(DONE_RASTERISATION => DONE_RASTERISATION, EN => EN_RASTERISATION, CLK => VGACLK, Rout => Rin, Gout => Gin, Bout => Bin, Xout => Xin, Yout => Yin, WR => WR);
+vgaSync : VGA_Sync port map(EN => EN_VGA, X => X, Y => Y, VS => V, HS => H, CLK => VGACLK);
 frameBuffer: Frame_Buffer port map(CLK => VGACLK, Rout => R, Gout => G, Bout => B, Xout => Xcord, Yout => Ycord, 
 WR => WR, Rin => Rin, Gin => Gin, Bin => Bin, Xin => Xin, Yin => Yin);
 
 Xcord <= X(9 downto 0);
 Ycord <= Y(9 downto 0);
-
---process
---begin
-	--Xcord <= std_logic_vector(to_unsigned(1, Xcord'length));
-	--Ycord <= std_logic_vector(to_unsigned(1, Ycord'length));
-	--wait for 100ns;
-	--Xcord <= std_logic_vector(to_unsigned(101, Xcord'length));
-	--Ycord <= std_logic_vector(to_unsigned(101, Ycord'length));
-	--wait;
---end process;
 
 process
 begin
@@ -92,16 +102,5 @@ begin
 	VGACLK <= '1';
 	wait for 20ns;
 end process;
-
---process 
---begin
-	--for i in 0 to 100 loop
-		--CLK <= '0';
-		--wait for 10ps;
-		--CLK <= '1';
-		--wait for 10ps;
-	--end loop;
---end process;
-
 
 end architecture;
