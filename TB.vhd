@@ -29,6 +29,8 @@ signal DONE_RASTERISATION: std_logic;
 signal EN_VGA: std_logic;
 signal EN_RASTERISATION: std_logic;
 
+signal DataRAMOut: std_logic_vector(2 downto 0);
+
 component Frame_Buffer is
 port(CLK: in std_logic;
 Rout: out std_logic;
@@ -84,7 +86,21 @@ EN_RASTERISATION: out std_logic
 ); 
 end component;
 
+component RAM is
+generic(
+ADDRESS_LENGTH: integer := 3;
+DATA_LENGTH: integer := 3
+);
+port(
+CLK: in std_logic;
+
+ADDRESS_IN : in std_logic_vector(ADDRESS_LENGTH - 1 downto 0);
+DATA_OUT : out std_logic_vector(DATA_LENGTH - 1 downto 0)
+);
+end component;
+
 begin
+DataRAM : RAM generic map(ADDRESS_LENGTH => 3, DATA_LENGTH => 3) port map(CLK => VGACLK, ADDRESS_IN => "000", DATA_OUT =>DataRAMOut);
 GraphicsPipelineSM : Graphics_pipeline_SM port map(EN => '1', RST => '0', CLK => VGACLK, DONE_RASTERISATION => DONE_RASTERISATION, 
 EN_VGA => EN_VGA, EN_RASTERISATION => EN_RASTERISATION);
 lineRasteriser: Rasteriser port map(DONE_RASTERISATION => DONE_RASTERISATION, EN => EN_RASTERISATION, CLK => VGACLK, Rout => Rin, Gout => Gin, Bout => Bin, Xout => Xin, Yout => Yin, WR => WR);

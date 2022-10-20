@@ -22,9 +22,9 @@ VHFE_DSP=WMH2dAJJ::R4F3
 !s100 0>;GWHcVX70Hb6=h7@UFY2
 Z7 OV;C;10.5b;63
 32
-Z8 !s110 1666254493
+Z8 !s110 1666258898
 !i10b 1
-Z9 !s108 1666254493.000000
+Z9 !s108 1666258898.000000
 Z10 !s90 -reportprogress|300|-work|work|C:/Users/simon/Desktop/UNI/VHDL/VGA/Frame_Buffer.vhd|
 Z11 !s107 C:/Users/simon/Desktop/UNI/VHDL/VGA/Frame_Buffer.vhd|
 !i113 1
@@ -50,7 +50,7 @@ R11
 R12
 R13
 Egraphics_pipeline_sm
-Z14 w1666254466
+Z14 w1666258938
 R2
 R3
 R4
@@ -63,11 +63,11 @@ VPPne2@_HL>GUMQZHSVzC02
 !s100 O5]Nn:<nJTe8aaeRa;;A53
 R7
 32
-R8
+Z17 !s110 1666258942
 !i10b 1
-R9
-Z17 !s90 -reportprogress|300|-work|work|C:/Users/simon/Desktop/UNI/VHDL/VGA/GraphicsipelineSM.vhd|
-Z18 !s107 C:/Users/simon/Desktop/UNI/VHDL/VGA/GraphicsipelineSM.vhd|
+Z18 !s108 1666258942.000000
+Z19 !s90 -reportprogress|300|-work|work|C:/Users/simon/Desktop/UNI/VHDL/VGA/GraphicsipelineSM.vhd|
+Z20 !s107 C:/Users/simon/Desktop/UNI/VHDL/VGA/GraphicsipelineSM.vhd|
 !i113 1
 R12
 R13
@@ -78,26 +78,67 @@ R4
 DEx4 work 20 graphics_pipeline_sm 0 22 PPne2@_HL>GUMQZHSVzC02
 l22
 L18
-VzSaJBYehac@ZcKSa<16NY1
-!s100 1=REa;B4H]iZ_achd3O^e2
+VRagnnc@cNTK2OC8LKbohz1
+!s100 kUj][>z0GI8V=m[3cHEUH2
 R7
 32
-R8
-!i10b 1
-R9
 R17
+!i10b 1
 R18
+R19
+R20
 !i113 1
 R12
 R13
-Erasteriser
-Z19 w1666254489
+Eram
+Z21 w1666260541
 R2
 R3
 R4
 R0
-Z20 8C:/Users/simon/Desktop/UNI/VHDL/VGA/Rasteriser.vhd
-Z21 FC:/Users/simon/Desktop/UNI/VHDL/VGA/Rasteriser.vhd
+Z22 8C:/Users/simon/Desktop/UNI/VHDL/VGA/RAM.vhd
+Z23 FC:/Users/simon/Desktop/UNI/VHDL/VGA/RAM.vhd
+l0
+L5
+VIcNbfhcG`k;cR5NzA5K;32
+!s100 ;PofoJz<>=3=8lX_C;]Qi3
+R7
+32
+Z24 !s110 1666260545
+!i10b 1
+Z25 !s108 1666260545.000000
+Z26 !s90 -reportprogress|300|-work|work|C:/Users/simon/Desktop/UNI/VHDL/VGA/RAM.vhd|
+Z27 !s107 C:/Users/simon/Desktop/UNI/VHDL/VGA/RAM.vhd|
+!i113 1
+R12
+R13
+Aarc
+R2
+R3
+R4
+Z28 DEx4 work 3 ram 0 22 IcNbfhcG`k;cR5NzA5K;32
+l31
+L18
+V0i075n@H<iKi>U_MX::b[2
+!s100 D9_<5ZFMBCRMEk@J]Oj5c3
+R7
+32
+R24
+!i10b 1
+R25
+R26
+R27
+!i113 1
+R12
+R13
+Erasteriser
+Z29 w1666254489
+R2
+R3
+R4
+R0
+Z30 8C:/Users/simon/Desktop/UNI/VHDL/VGA/Rasteriser.vhd
+Z31 FC:/Users/simon/Desktop/UNI/VHDL/VGA/Rasteriser.vhd
 l0
 L5
 V6XF>[kfBdDl;Sf;JAhP482
@@ -107,8 +148,8 @@ R7
 R8
 !i10b 1
 R9
-Z22 !s90 -reportprogress|300|-work|work|C:/Users/simon/Desktop/UNI/VHDL/VGA/Rasteriser.vhd|
-Z23 !s107 C:/Users/simon/Desktop/UNI/VHDL/VGA/Rasteriser.vhd|
+Z32 !s90 -reportprogress|300|-work|work|C:/Users/simon/Desktop/UNI/VHDL/VGA/Rasteriser.vhd|
+Z33 !s107 C:/Users/simon/Desktop/UNI/VHDL/VGA/Rasteriser.vhd|
 !i113 1
 R12
 R13
@@ -126,19 +167,19 @@ R7
 R8
 !i10b 1
 R9
-R22
-R23
+R32
+R33
 !i113 1
 R12
 R13
 Etb
-Z24 w1666254144
+Z34 w1666254144
 R2
 R3
 R4
 R0
-Z25 8C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd
-Z26 FC:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd
+Z35 8C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd
+Z36 FC:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd
 l0
 L5
 VMiJCZUIUz^P[BJCWl?2<Z1
@@ -148,8 +189,8 @@ R7
 R8
 !i10b 1
 R9
-Z27 !s90 -reportprogress|300|-work|work|C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd|
-Z28 !s107 C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd|
+Z37 !s90 -reportprogress|300|-work|work|C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd|
+Z38 !s107 C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd|
 !i113 1
 R12
 R13
@@ -167,19 +208,19 @@ R7
 R8
 !i10b 1
 R9
-R27
-R28
+R37
+R38
 !i113 1
 R12
 R13
 Evga_sync
-Z29 w1666253023
+Z39 w1666253023
 R2
 R3
 R4
 R0
-Z30 8C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd
-Z31 FC:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd
+Z40 8C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd
+Z41 FC:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd
 l0
 L5
 V=lkQc_iV0gG9@V5E5zBWF0
@@ -189,8 +230,8 @@ R7
 R8
 !i10b 1
 R9
-Z32 !s90 -reportprogress|300|-work|work|C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd|
-Z33 !s107 C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd|
+Z42 !s90 -reportprogress|300|-work|work|C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd|
+Z43 !s107 C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd|
 !i113 1
 R12
 R13
@@ -198,40 +239,40 @@ Aarc
 R2
 R3
 R4
-Z34 DEx4 work 8 vga_sync 0 22 =lkQc_iV0gG9@V5E5zBWF0
+DEx4 work 8 vga_sync 0 22 =lkQc_iV0gG9@V5E5zBWF0
 l42
 L16
-Z35 VM[68Hh0N8GM4PD1D;;LbG2
-Z36 !s100 WAbKJ3G@JOQMkzS7iJ:7K1
+VM[68Hh0N8GM4PD1D;;LbG2
+!s100 WAbKJ3G@JOQMkzS7iJ:7K1
 R7
 32
 R8
 !i10b 1
 R9
-R32
-R33
+R42
+R43
 !i113 1
 R12
 R13
 Evga_synctimer
-Z37 w1666114573
+Z44 w1666114573
 R2
 R3
 R4
 R0
-Z38 8C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd
-Z39 FC:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd
+Z45 8C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd
+Z46 FC:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd
 l0
 L5
 VOD>65h;lL62ZL01<`Nh?Q0
 !s100 RFR0zFgg=GdS:3^Ff1HlQ3
 R7
 32
-Z40 !s110 1666254190
+R8
 !i10b 1
-Z41 !s108 1666254190.000000
-Z42 !s90 -reportprogress|300|-work|work|C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd|
-Z43 !s107 C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd|
+R9
+Z47 !s90 -reportprogress|300|-work|work|C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd|
+Z48 !s107 C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd|
 !i113 1
 R12
 R13
@@ -246,11 +287,11 @@ VEeL:n6?PNP__PJ]eCnSbX0
 !s100 `MabP7h>Ol29>ILPWCAid0
 R7
 32
-R40
+R8
 !i10b 1
-R41
-R42
-R43
+R9
+R47
+R48
 !i113 1
 R12
 R13

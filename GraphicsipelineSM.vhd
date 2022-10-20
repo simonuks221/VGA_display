@@ -26,7 +26,6 @@ begin
 	if RST = '1' then
 		state <= IDLE;
 	elsif rising_edge(CLK) then
-	report "CLK";
 		state <= nextState; 
 	end if;
 end process;
