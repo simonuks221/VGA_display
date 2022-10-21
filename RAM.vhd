@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 
 entity RAM is
 generic(
-ADDRESS_LENGTH: integer := 3; --bits
+ADDRESS_LENGTH: integer := 4; --bits
 DATA_LENGTH: integer := 10 --bits
 );
 port(
@@ -27,13 +27,13 @@ begin
 	
 	returnData(1) := std_logic_vector(to_unsigned(0, DATA_LENGTH));
 	returnData(2) := std_logic_vector(to_unsigned(0, DATA_LENGTH));
-	returnData(3) := std_logic_vector(to_unsigned(630, DATA_LENGTH));
-	returnData(4) := std_logic_vector(to_unsigned(450, DATA_LENGTH));
+	returnData(3) := std_logic_vector(to_unsigned(7, DATA_LENGTH));
+	returnData(4) := std_logic_vector(to_unsigned(4, DATA_LENGTH));
 	
-	returnData(5) := std_logic_vector(to_unsigned(100, DATA_LENGTH));
-	returnData(6) := std_logic_vector(to_unsigned(400, DATA_LENGTH));
-	returnData(7) := std_logic_vector(to_unsigned(0, DATA_LENGTH));
-	returnData(8) := std_logic_vector(to_unsigned(300, DATA_LENGTH));
+	returnData(5) := std_logic_vector(to_unsigned(0, DATA_LENGTH));
+	returnData(6) := std_logic_vector(to_unsigned(0, DATA_LENGTH));
+	returnData(7) := std_logic_vector(to_unsigned(7, DATA_LENGTH));
+	returnData(8) := std_logic_vector(to_unsigned(4, DATA_LENGTH));
 	
 	return returnData;
 end function;

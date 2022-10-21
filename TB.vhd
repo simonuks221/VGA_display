@@ -60,7 +60,11 @@ RGBout: out std_logic_vector(0 to 2);
 Xout: out std_logic_vector(9 downto 0);
 Yout: out std_logic_vector(9 downto 0);
 WR: out std_logic;
-DONE_RASTERISATION: out std_logic
+DONE_RASTERISATION: out std_logic;
+x0 : in signed(10 downto 0);
+y0 : in signed(10 downto 0);
+x1 : in signed(10 downto 0);
+y1 : in signed(10 downto 0)
 );
 end component;
 

@@ -23,7 +23,7 @@ architecture arc of VGA_SyncTimer is
 signal counter : integer := 0;
 begin
 
-process(CLK)
+process(CLK, EN)
 begin
  if rising_edge(CLK) and EN = '1' then
 	counter <= counter + 1;

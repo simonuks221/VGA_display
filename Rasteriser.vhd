@@ -10,79 +10,74 @@ RGBout: out std_logic_vector(0 to 2);
 Xout: out std_logic_vector(9 downto 0);
 Yout: out std_logic_vector(9 downto 0);
 WR: out std_logic;
-DONE_RASTERISATION: out std_logic
+DONE_RASTERISATION: out std_logic;
+x0 : in signed(10 downto 0);
+y0 : in signed(10 downto 0);
+x1 : in signed(10 downto 0);
+y1 : in signed(10 downto 0)
 );
 end entity;
 
 architecture arc of Rasteriser is
 type vector2D is array(0 to 1) of std_logic_vector(9 downto 0);
-signal x0 : signed(10 downto 0) := to_signed(10, 11);
-signal y0 : signed(10 downto 0) := to_signed(10, 11);
-signal x1 : signed(10 downto 0) := to_signed(630, 11);
-signal y1 : signed(10 downto 0) := to_signed(450, 11);
+signal xx0 : signed(10 downto 0) := to_signed(0, 11);
+signal yy0 : signed(10 downto 0) := to_signed(0, 11);
+signal xx1 : signed(10 downto 0) := to_signed(7, 11);
+signal yy1 : signed(10 downto 0) := to_signed(4, 11);
+signal error : signed(10 downto 0);
+
+signal newX01 : signed(10 downto 0);
+signal newY01 : signed(10 downto 0);
+signal newError1 : signed(10 downto 0);
+signal newError2 : signed(10 downto 0);
 
 
 signal inLoop: std_logic := '0';
-signal start : std_logic := '1';
 signal dx, sx, sy, dy: signed(10 downto 0);
 begin
 
+newError1 <= error + dy when error * 2 >= dy and inLoop = '1' and xx0 /= xx1 else error;
+newX01 <= xx0 + sx when error * 2 >= dy and inLoop = '1' and xx0 /= xx1 else xx0;
+
+newError2 <= newError1 + dx when error * 2 <= dx and inLoop = '1' and yy0 /= yy1 else dx + dy when EN = '1' else newError1;
+newY01 <= yy0 + sy when error * 2 <= dx and inLoop = '1' and yy0 /= yy1 else yy0;
+
 process (CLK)
-variable error: integer := 0;
-variable e2 : integer := 0;
 begin
 	if EN = '0' then
-		start <= '0';
 		inLoop <= '0';
+		DONE_RASTERISATION <= '0';
+		xx0 <= X0;
+		yy0 <= Y0;
+		xx1 <= X1;
+		yy1 <= Y1;
 	elsif rising_edge(CLK) then
-		if start = '1' then
+		if EN = '1' then
 			inLoop <= '1';
-			start <= '0';
-			error := to_integer(dx + dy);
 		end if;
-		
-		if inLoop = '1' then
-			start <= '0';
-			if x0 = x1 and y0 = y1 then
+		if inLoop <= '1' then
+			xx0 <= newX01;
+			yy0 <= newY01;
+			error <= newError2;
+			if xx0 = xx1 and yy0 = yy1 then
 				inLoop <= '0';
-			else
-				e2 := error * 2;
-				if e2 >= dy then
-					if x0 = x1 then
-					
-					else
-						error := to_integer(error + dy);
-						report "error1 "& integer'image(error);
-						x0 <= x0 + sx;
-					end if;
-				end if;
-				if e2 <= dx then
-					if y0 = y1 then
-					
-					else
-						error := to_integer(error + dx);
-						report "error2 "& integer'image(error);
-						y0 <= y0 + sy;
-					end if;
-				end if;
+				DONE_RASTERISATION <= '1';
 			end if;
-			--report "error "& integer'image(error);
 		end if;
 	end if;
-end process;
+end process; 
 
-dx <= abs(x1 - x0) when start = '1'; --BLOGAI, nera ABS
-sx <= to_signed(1, 11) when x0 < x1 else to_signed(-1, 11);
-dy <= -(y1 - y0) when start = '1';
-sy <= to_signed(1, 11) when y0 < y1 else to_signed(-1, 11);
+dx <= abs(xx1 - xx0) when inLoop = '0'; --BLOGAI, bloagai ABS
+sx <= to_signed(1, 11) when xx0 < xx1 else to_signed(-1, 11);
+dy <= -(yy1 - yy0) when inLoop = '0';
+sy <= to_signed(1, 11) when yy0 < yy1 else to_signed(-1, 11);
 
 RGBout <= "100" when inLoop = '1' else "ZZZ";
-Xout <= std_logic_vector(x0(9 downto 0)) when inLoop = '1' else (others => 'Z');
-Yout <= std_logic_vector(y0(9 downto 0)) when inLoop = '1' else (others => 'Z');
+Xout <= std_logic_vector(xx0(9 downto 0)) when inLoop = '1' else (others => 'Z');
+Yout <= std_logic_vector(yy0(9 downto 0)) when inLoop = '1' else (others => 'Z');
 WR <= inLoop;
---error <= to_signed(7, 11);
 
-DONE_RASTERISATION <= '1' when inLoop = '0' and start = '0' else '0';
+--DONE_RASTERISATION <= '1' when inLoop = '0' and EN = '1' else '0';
 
 
 
