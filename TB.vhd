@@ -25,8 +25,6 @@ signal DONE_RASTERISATION: std_logic;
 signal EN_VGA: std_logic;
 signal EN_RASTERISATION: std_logic;
 
-signal DataRAMOut: std_logic_vector(2 downto 0);
-
 component Frame_Buffer is
 port(
 CLK: in std_logic;
@@ -52,22 +50,6 @@ VS : out std_logic
 );
 end component;
 
-component Rasteriser is
-port(
-EN: in std_logic;
-CLK: in std_logic;
-RGBout: out std_logic_vector(0 to 2);
-Xout: out std_logic_vector(9 downto 0);
-Yout: out std_logic_vector(9 downto 0);
-WR: out std_logic;
-DONE_RASTERISATION: out std_logic;
-x0 : in signed(10 downto 0);
-y0 : in signed(10 downto 0);
-x1 : in signed(10 downto 0);
-y1 : in signed(10 downto 0)
-);
-end component;
-
 component Graphics_pipeline_SM is
 port(
 EN : in std_logic;
@@ -81,28 +63,23 @@ EN_RASTERISATION: out std_logic
 ); 
 end component;
 
-component RAM is
-generic(
-ADDRESS_LENGTH: integer := 3;
-DATA_LENGTH: integer := 3
-);
-port(
-CLK: in std_logic;
-
-ADDRESS_IN : in std_logic_vector(ADDRESS_LENGTH - 1 downto 0);
-DATA_OUT : out std_logic_vector(DATA_LENGTH - 1 downto 0)
+component DataReadTB is
+port (
+RGBout: out std_logic_vector(0 to 2);
+Xout: out std_logic_vector(9 downto 0);
+Yout: out std_logic_vector(9 downto 0);
+WR: out std_logic;
+AllRasterisationDone : out std_logic
 );
 end component;
 
 begin
-DataRAM : RAM generic map(ADDRESS_LENGTH => 3, DATA_LENGTH => 3) port map(CLK => VGACLK, ADDRESS_IN => "000", DATA_OUT =>DataRAMOut);
+
+dataReadComponent : DataReadTB port map(RGBout => RGBbuffer, Xout => Xin, Yout => Yin, WR => WR, AllRasterisationDone => DONE_RASTERISATION);
 
 GraphicsPipelineSM : Graphics_pipeline_SM port map(EN => '1', RST => '0', CLK => VGACLK, 
 DONE_RASTERISATION => DONE_RASTERISATION, 
-EN_VGA => EN_VGA, EN_RASTERISATION => EN_RASTERISATION);
-
-lineRasteriser: Rasteriser port map(DONE_RASTERISATION => DONE_RASTERISATION, EN => EN_RASTERISATION, 
-CLK => VGACLK, RGBout => RGBbuffer, Xout => Xin, Yout => Yin, WR => WR);
+EN_VGA => EN_VGA, EN_RASTERISATION => EN_RASTERISATION); --EN RASTERISATION NOT FIGURING ANYWHERE
 
 vgaSync : VGA_Sync port map(EN => EN_VGA, X => X, Y => Y, VS => V, HS => H, CLK => VGACLK);
 frameBuffer: Frame_Buffer port map(CLK => VGACLK, RGBout => RGB, Xout => Xcord, Yout => Ycord, 

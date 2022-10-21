@@ -16,7 +16,8 @@ StartLine : out std_logic;
 LineX0 : out std_logic_vector(10 downto 0);
 LineY0 : out std_logic_vector(10 downto 0);
 LineX1 : out std_logic_vector(10 downto 0);
-LineY1 : out std_logic_vector(10 downto 0)
+LineY1 : out std_logic_vector(10 downto 0);
+AllDone : out std_logic
 );
 end entity;
 
@@ -35,6 +36,7 @@ begin
 		if doLine = '1' and LineDONE = '1' then
 			doLine <= '0';
 			if lineIndex + 1 = lineAmount then --Completed all lines
+				AllDone <= '1'; --CHANGE HERE FOR MULTPLE FRAMES
 				lineIndex <= 0;
 			else
 				--Didnt complete all lines yet

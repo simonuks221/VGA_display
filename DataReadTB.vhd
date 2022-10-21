@@ -3,7 +3,13 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity DataReadTB is
-
+port (
+RGBout: out std_logic_vector(0 to 2);
+Xout: out std_logic_vector(9 downto 0);
+Yout: out std_logic_vector(9 downto 0);
+WR: out std_logic;
+AllRasterisationDone : out std_logic
+);
 end entity;
 
 architecture arc of DataReadTB is
@@ -34,7 +40,8 @@ StartLine : out std_logic;
 LineX0 : out std_logic_vector(10 downto 0);
 LineY0 : out std_logic_vector(10 downto 0);
 LineX1 : out std_logic_vector(10 downto 0);
-LineY1 : out std_logic_vector(10 downto 0)
+LineY1 : out std_logic_vector(10 downto 0);
+AllDone : out std_logic
 );
 end component;
 
@@ -54,10 +61,7 @@ y1 : in signed(10 downto 0)
 );
 end component;
 
-signal RGBout: std_logic_vector(0 to 2);
-signal Xout: std_logic_vector(9 downto 0);
-signal Yout: std_logic_vector(9 downto 0);
-signal WR: std_logic;
+
 
 signal DataRAMData : std_logic_vector(9 downto 0);
 signal DataRAMAddress : std_logic_vector(3 downto 0);
@@ -72,7 +76,8 @@ signal LineY1 : std_logic_vector(10 downto 0);
 begin
 
 dataReadInterface : Data_Read_Interface port map (CLK => VGACLK, DataRAMData => DataRAMData, DataRAMAddress => DataRAMAddress,
-LineDONE => LineDONE, StartLine => StartLine, LineX0 => LineX0, LineY0 => LineY0, LineX1 => LineX1, LineY1 => LineY1);
+LineDONE => LineDONE, StartLine => StartLine, LineX0 => LineX0, LineY0 => LineY0, LineX1 => LineX1, LineY1 => LineY1, 
+AllDone => AllRasterisationDone);
 
 DataRAM : RAM port map(CLK => VGACLK, ADDRESS_IN => DataRAMAddress, DATA_OUT => DataRAMData);
 

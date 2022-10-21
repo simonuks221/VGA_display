@@ -1,5 +1,5 @@
 Analysis & Synthesis report for VGA_Graphics
-Fri Oct 21 16:59:24 2022
+Fri Oct 21 17:24:16 2022
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -46,7 +46,7 @@ agreement for further details.
 +---------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                    ;
 +-----------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status       ; Successful - Fri Oct 21 16:59:24 2022       ;
+; Analysis & Synthesis Status       ; Successful - Fri Oct 21 17:24:16 2022       ;
 ; Quartus Prime Version             ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
 ; Revision Name                     ; VGA_Graphics                                ;
 ; Top-level Entity Name             ; VGA_Sync                                    ;
@@ -332,7 +332,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Fri Oct 21 16:59:14 2022
+    Info: Processing started: Fri Oct 21 17:24:06 2022
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off VGA_Graphics -c VGA_Graphics
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
@@ -358,10 +358,10 @@ Info (12021): Found 2 design units, including 1 entities, in source file ram.vhd
     Info (12022): Found design unit 1: RAM-arc File: C:/Users/simon/Desktop/UNI/VHDL/VGA/RAM.vhd Line: 18
     Info (12023): Found entity 1: RAM File: C:/Users/simon/Desktop/UNI/VHDL/VGA/RAM.vhd Line: 5
 Info (12021): Found 2 design units, including 1 entities, in source file datareadinterface.vhd
-    Info (12022): Found design unit 1: Data_Read_Interface-arc File: C:/Users/simon/Desktop/UNI/VHDL/VGA/DataReadInterface.vhd Line: 23
+    Info (12022): Found design unit 1: Data_Read_Interface-arc File: C:/Users/simon/Desktop/UNI/VHDL/VGA/DataReadInterface.vhd Line: 24
     Info (12023): Found entity 1: Data_Read_Interface File: C:/Users/simon/Desktop/UNI/VHDL/VGA/DataReadInterface.vhd Line: 5
 Info (12021): Found 2 design units, including 1 entities, in source file datareadtb.vhd
-    Info (12022): Found design unit 1: DataReadTB-arc File: C:/Users/simon/Desktop/UNI/VHDL/VGA/DataReadTB.vhd Line: 9
+    Info (12022): Found design unit 1: DataReadTB-arc File: C:/Users/simon/Desktop/UNI/VHDL/VGA/DataReadTB.vhd Line: 15
     Info (12023): Found entity 1: DataReadTB File: C:/Users/simon/Desktop/UNI/VHDL/VGA/DataReadTB.vhd Line: 5
 Info (12127): Elaborating entity "VGA_Sync" for the top level hierarchy
 Warning (10036): Verilog HDL or VHDL warning at VGA_Sync.vhd(39): object "verticalNextLine" assigned a value but never read File: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd Line: 39
@@ -375,9 +375,9 @@ Info (21057): Implemented 160 device resources after synthesis - the final resou
     Info (21059): Implemented 34 output pins
     Info (21061): Implemented 124 logic cells
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 2 warnings
-    Info: Peak virtual memory: 4887 megabytes
-    Info: Processing ended: Fri Oct 21 16:59:24 2022
+    Info: Peak virtual memory: 4908 megabytes
+    Info: Processing ended: Fri Oct 21 17:24:16 2022
     Info: Elapsed time: 00:00:10
-    Info: Total CPU time (on all processors): 00:00:21
+    Info: Total CPU time (on all processors): 00:00:22
 
 
