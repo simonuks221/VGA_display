@@ -21,8 +21,8 @@ end entity;
 architecture arc of Rasteriser is
 type vector2D is array(0 to 1) of std_logic_vector(9 downto 0);
 signal xx0 : signed(10 downto 0) := to_signed(0, 11);
-signal yy0 : signed(10 downto 0) := to_signed(0, 11);
-signal xx1 : signed(10 downto 0) := to_signed(7, 11);
+signal yy0 : signed(10 downto 0) := to_signed(1, 11);
+signal xx1 : signed(10 downto 0) := to_signed(6, 11);
 signal yy1 : signed(10 downto 0) := to_signed(4, 11);
 signal error : signed(10 downto 0);
 
@@ -36,11 +36,11 @@ signal inLoop: std_logic := '0';
 signal dx, sx, sy, dy: signed(10 downto 0);
 begin
 
-newError1 <= error + dy when error * 2 >= dy and inLoop = '1' and xx0 /= xx1 else error;
-newX01 <= xx0 + sx when error * 2 >= dy and inLoop = '1' and xx0 /= xx1 else xx0;
+newError1 <= error + dy when error * 2 > dy and inLoop = '1' and xx0 /= xx1 else error;
+newX01 <= xx0 + sx when error * 2 > dy and inLoop = '1' and xx0 /= xx1 else xx0;
 
-newError2 <= newError1 + dx when error * 2 <= dx and inLoop = '1' and yy0 /= yy1 else dx + dy when EN = '1' else newError1;
-newY01 <= yy0 + sy when error * 2 <= dx and inLoop = '1' and yy0 /= yy1 else yy0;
+newError2 <= newError1 + dx when error * 2 < dx and inLoop = '1' and yy0 /= yy1 else dx + dy when inLoop = '0' else newError1;
+newY01 <= yy0 + sy when error * 2 < dx and inLoop = '1' and yy0 /= yy1 else yy0;
 
 process (CLK)
 begin
@@ -69,7 +69,7 @@ end process;
 
 dx <= abs(xx1 - xx0) when inLoop = '0'; --BLOGAI, bloagai ABS
 sx <= to_signed(1, 11) when xx0 < xx1 else to_signed(-1, 11);
-dy <= -(yy1 - yy0) when inLoop = '0';
+dy <= -abs(yy1 - yy0) when inLoop = '0';
 sy <= to_signed(1, 11) when yy0 < yy1 else to_signed(-1, 11);
 
 RGBout <= "100" when inLoop = '1' else "ZZZ";

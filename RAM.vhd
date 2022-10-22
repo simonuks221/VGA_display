@@ -25,10 +25,10 @@ begin
 	
 	returnData(0) := std_logic_vector(to_unsigned(2, DATA_LENGTH)); --We will have 3 lines
 	
-	returnData(1) := std_logic_vector(to_unsigned(0, DATA_LENGTH));
-	returnData(2) := std_logic_vector(to_unsigned(0, DATA_LENGTH));
-	returnData(3) := std_logic_vector(to_unsigned(400, DATA_LENGTH));
-	returnData(4) := std_logic_vector(to_unsigned(400, DATA_LENGTH));
+	returnData(1) := std_logic_vector(to_unsigned(7, DATA_LENGTH));
+	returnData(2) := std_logic_vector(to_unsigned(4, DATA_LENGTH));
+	returnData(3) := std_logic_vector(to_unsigned(0, DATA_LENGTH));
+	returnData(4) := std_logic_vector(to_unsigned(0, DATA_LENGTH));
 	
 	returnData(5) := std_logic_vector(to_unsigned(400, DATA_LENGTH));
 	returnData(6) := std_logic_vector(to_unsigned(100, DATA_LENGTH));
