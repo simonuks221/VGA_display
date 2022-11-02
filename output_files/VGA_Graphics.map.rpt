@@ -1,5 +1,5 @@
 Analysis & Synthesis report for VGA_Graphics
-Sat Oct 22 10:24:41 2022
+Mon Oct 24 23:28:25 2022
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -46,17 +46,17 @@ agreement for further details.
 +---------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                    ;
 +-----------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status       ; Successful - Sat Oct 22 10:24:41 2022       ;
+; Analysis & Synthesis Status       ; Successful - Mon Oct 24 23:28:25 2022       ;
 ; Quartus Prime Version             ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
 ; Revision Name                     ; VGA_Graphics                                ;
 ; Top-level Entity Name             ; VGA_Sync                                    ;
 ; Family                            ; Arria II GX                                 ;
 ; Logic utilization                 ; N/A                                         ;
-;     Combinational ALUTs           ; 92                                          ;
+;     Combinational ALUTs           ; 95                                          ;
 ;     Memory ALUTs                  ; 0                                           ;
 ;     Dedicated logic registers     ; 97                                          ;
 ; Total registers                   ; 97                                          ;
-; Total pins                        ; 36                                          ;
+; Total pins                        ; 37                                          ;
 ; Total virtual pins                ; 0                                           ;
 ; Total block memory bits           ; 0                                           ;
 ; DSP block 18-bit elements         ; 0                                           ;
@@ -187,8 +187,8 @@ agreement for further details.
 +-----------------------------------------------+-----------+
 ; Resource                                      ; Usage     ;
 +-----------------------------------------------+-----------+
-; Estimated ALUTs Used                          ; 92        ;
-;     -- Combinational ALUTs                    ; 92        ;
+; Estimated ALUTs Used                          ; 95        ;
+;     -- Combinational ALUTs                    ; 95        ;
 ;     -- Memory ALUTs                           ; 0         ;
 ;     -- LUT_REGs                               ; 0         ;
 ; Dedicated logic registers                     ; 97        ;
@@ -197,21 +197,21 @@ agreement for further details.
 ;     -- Due to unpartnered combinational logic ; 0         ;
 ;     -- Due to Memory ALUTs                    ; 0         ;
 ;                                               ;           ;
-; Total combinational functions                 ; 92        ;
+; Total combinational functions                 ; 95        ;
 ; Combinational ALUT usage by number of inputs  ;           ;
 ;     -- 7 input functions                      ; 0         ;
-;     -- 6 input functions                      ; 12        ;
-;     -- 5 input functions                      ; 9         ;
+;     -- 6 input functions                      ; 15        ;
+;     -- 5 input functions                      ; 7         ;
 ;     -- 4 input functions                      ; 5         ;
-;     -- <=3 input functions                    ; 66        ;
+;     -- <=3 input functions                    ; 68        ;
 ;                                               ;           ;
 ; Combinational ALUTs by mode                   ;           ;
-;     -- normal mode                            ; 28        ;
+;     -- normal mode                            ; 31        ;
 ;     -- extended LUT mode                      ; 0         ;
 ;     -- arithmetic mode                        ; 64        ;
 ;     -- shared arithmetic mode                 ; 0         ;
 ;                                               ;           ;
-; Estimated ALUT/register pairs used            ; 120       ;
+; Estimated ALUT/register pairs used            ; 122       ;
 ;                                               ;           ;
 ; Total registers                               ; 97        ;
 ;     -- Dedicated logic registers              ; 97        ;
@@ -219,14 +219,14 @@ agreement for further details.
 ;     -- LUT_REGs                               ; 0         ;
 ;                                               ;           ;
 ;                                               ;           ;
-; I/O pins                                      ; 36        ;
+; I/O pins                                      ; 37        ;
 ;                                               ;           ;
 ; DSP block 18-bit elements                     ; 0         ;
 ;                                               ;           ;
 ; Maximum fan-out node                          ; CLK~input ;
 ; Maximum fan-out                               ; 97        ;
-; Total fan-out                                 ; 726       ;
-; Average fan-out                               ; 2.78      ;
+; Total fan-out                                 ; 742       ;
+; Average fan-out                               ; 2.79      ;
 +-----------------------------------------------+-----------+
 
 
@@ -235,7 +235,7 @@ agreement for further details.
 +----------------------------------------+---------------------+---------------------------+-------------------+--------------+---------+-----------+-----------+-----------+------+--------------+---------------------------------------------+---------------+--------------+
 ; Compilation Hierarchy Node             ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 12x12 ; DSP 18x18 ; DSP 36x36 ; Pins ; Virtual Pins ; Full Hierarchy Name                         ; Entity Name   ; Library Name ;
 +----------------------------------------+---------------------+---------------------------+-------------------+--------------+---------+-----------+-----------+-----------+------+--------------+---------------------------------------------+---------------+--------------+
-; |VGA_Sync                              ; 92 (5)              ; 97 (0)                    ; 0                 ; 0            ; 0       ; 0         ; 0         ; 0         ; 36   ; 0            ; |VGA_Sync                                   ; VGA_Sync      ; work         ;
+; |VGA_Sync                              ; 95 (8)              ; 97 (0)                    ; 0                 ; 0            ; 0       ; 0         ; 0         ; 0         ; 37   ; 0            ; |VGA_Sync                                   ; VGA_Sync      ; work         ;
 ;    |VGA_SyncTimer:horizontalSyncTimer| ; 45 (45)             ; 49 (49)                   ; 0                 ; 0            ; 0       ; 0         ; 0         ; 0         ; 0    ; 0            ; |VGA_Sync|VGA_SyncTimer:horizontalSyncTimer ; VGA_SyncTimer ; work         ;
 ;    |VGA_SyncTimer:verticalSyncTimer|   ; 42 (42)             ; 48 (48)                   ; 0                 ; 0            ; 0       ; 0         ; 0         ; 0         ; 0    ; 0            ; |VGA_Sync|VGA_SyncTimer:verticalSyncTimer   ; VGA_SyncTimer ; work         ;
 +----------------------------------------+---------------------+---------------------------+-------------------+--------------+---------+-----------+-----------+-----------+------+--------------+---------------------------------------------+---------------+--------------+
@@ -301,19 +301,19 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     ENA               ; 33                          ;
 ;     ENA SCLR          ; 64                          ;
 ; arriaii_io_obuf       ; 32                          ;
-; boundary_port         ; 36                          ;
-; stratixiv_lcell_comb  ; 94                          ;
+; boundary_port         ; 37                          ;
+; stratixiv_lcell_comb  ; 97                          ;
 ;     arith             ; 64                          ;
 ;         1 data inputs ; 64                          ;
-;     normal            ; 30                          ;
+;     normal            ; 33                          ;
 ;         1 data inputs ; 2                           ;
-;         3 data inputs ; 2                           ;
+;         3 data inputs ; 4                           ;
 ;         4 data inputs ; 5                           ;
-;         5 data inputs ; 9                           ;
-;         6 data inputs ; 12                          ;
+;         5 data inputs ; 7                           ;
+;         6 data inputs ; 15                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 4.10                        ;
-; Average LUT depth     ; 2.68                        ;
+; Average LUT depth     ; 2.71                        ;
 +-----------------------+-----------------------------+
 
 
@@ -332,7 +332,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Sat Oct 22 10:24:31 2022
+    Info: Processing started: Mon Oct 24 23:28:14 2022
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off VGA_Graphics -c VGA_Graphics
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
@@ -340,7 +340,7 @@ Info (12021): Found 2 design units, including 1 entities, in source file tb.vhd
     Info (12022): Found design unit 1: TB-arc File: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd Line: 9
     Info (12023): Found entity 1: TB File: C:/Users/simon/Desktop/UNI/VHDL/VGA/TB.vhd Line: 5
 Info (12021): Found 2 design units, including 1 entities, in source file vga_sync.vhd
-    Info (12022): Found design unit 1: VGA_Sync-arc File: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd Line: 16
+    Info (12022): Found design unit 1: VGA_Sync-arc File: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd Line: 17
     Info (12023): Found entity 1: VGA_Sync File: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd Line: 5
 Info (12021): Found 2 design units, including 1 entities, in source file vga_synctimer.vhd
     Info (12022): Found design unit 1: VGA_SyncTimer-arc File: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_SyncTimer.vhd Line: 22
@@ -364,20 +364,20 @@ Info (12021): Found 2 design units, including 1 entities, in source file datarea
     Info (12022): Found design unit 1: DataReadTB-arc File: C:/Users/simon/Desktop/UNI/VHDL/VGA/DataReadTB.vhd Line: 15
     Info (12023): Found entity 1: DataReadTB File: C:/Users/simon/Desktop/UNI/VHDL/VGA/DataReadTB.vhd Line: 5
 Info (12127): Elaborating entity "VGA_Sync" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at VGA_Sync.vhd(39): object "verticalNextLine" assigned a value but never read File: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd Line: 39
-Info (12128): Elaborating entity "VGA_SyncTimer" for hierarchy "VGA_SyncTimer:horizontalSyncTimer" File: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd Line: 44
-Info (12128): Elaborating entity "VGA_SyncTimer" for hierarchy "VGA_SyncTimer:verticalSyncTimer" File: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd Line: 45
+Warning (10036): Verilog HDL or VHDL warning at VGA_Sync.vhd(40): object "verticalNextLine" assigned a value but never read File: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd Line: 40
+Info (12128): Elaborating entity "VGA_SyncTimer" for hierarchy "VGA_SyncTimer:horizontalSyncTimer" File: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd Line: 45
+Info (12128): Elaborating entity "VGA_SyncTimer" for hierarchy "VGA_SyncTimer:verticalSyncTimer" File: C:/Users/simon/Desktop/UNI/VHDL/VGA/VGA_Sync.vhd Line: 46
 Info (286030): Timing-Driven Synthesis is running
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 160 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 164 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 2 input pins
-    Info (21059): Implemented 34 output pins
-    Info (21061): Implemented 124 logic cells
+    Info (21059): Implemented 35 output pins
+    Info (21061): Implemented 127 logic cells
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 2 warnings
-    Info: Peak virtual memory: 4907 megabytes
-    Info: Processing ended: Sat Oct 22 10:24:41 2022
-    Info: Elapsed time: 00:00:10
-    Info: Total CPU time (on all processors): 00:00:20
+    Info: Peak virtual memory: 4904 megabytes
+    Info: Processing ended: Mon Oct 24 23:28:25 2022
+    Info: Elapsed time: 00:00:11
+    Info: Total CPU time (on all processors): 00:00:23
 
 

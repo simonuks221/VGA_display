@@ -22,6 +22,7 @@ signal Xin: std_logic_vector(9 downto 0);
 signal Yin: std_logic_vector(9 downto 0);
 
 signal DONE_RASTERISATION: std_logic;
+signal DONE_SYNC: std_logic;
 signal EN_VGA: std_logic;
 signal EN_RASTERISATION: std_logic;
 
@@ -46,7 +47,8 @@ CLK: in std_logic;
 X: out std_logic_vector(15 downto 0);
 Y: out std_logic_vector(15 downto 0);
 HS : out std_logic;
-VS : out std_logic
+VS : out std_logic;
+DONE : out std_logic
 );
 end component;
 
@@ -57,7 +59,7 @@ RST: in std_logic;
 CLK : in std_logic;
 
 DONE_RASTERISATION: in std_logic;
-
+DONE_SYNC: in std_logic;
 EN_VGA: out std_logic;
 EN_RASTERISATION: out std_logic
 ); 
@@ -79,9 +81,9 @@ dataReadComponent : DataReadTB port map(RGBout => RGBbuffer, Xout => Xin, Yout =
 
 GraphicsPipelineSM : Graphics_pipeline_SM port map(EN => '1', RST => '0', CLK => VGACLK, 
 DONE_RASTERISATION => DONE_RASTERISATION, 
-EN_VGA => EN_VGA, EN_RASTERISATION => EN_RASTERISATION); --EN RASTERISATION NOT FIGURING ANYWHERE
+EN_VGA => EN_VGA, EN_RASTERISATION => EN_RASTERISATION, DONE_SYNC => DONE_SYNC); --EN RASTERISATION NOT FIGURING ANYWHERE
 
-vgaSync : VGA_Sync port map(EN => EN_VGA, X => X, Y => Y, VS => V, HS => H, CLK => VGACLK);
+vgaSync : VGA_Sync port map(EN => EN_VGA, X => X, Y => Y, VS => V, HS => H, CLK => VGACLK, DONE => DONE_SYNC);
 frameBuffer: Frame_Buffer port map(CLK => VGACLK, RGBout => RGB, Xout => Xcord, Yout => Ycord, 
 WR => WR, RGBin => RGBbuffer, Xin => Xin, Yin => Yin);
 

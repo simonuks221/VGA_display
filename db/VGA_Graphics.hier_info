@@ -1,4 +1,5 @@
 |VGA_Sync
+EN => DONE.IN1
 EN => X.IN1
 EN => VGA_SyncTimer:horizontalSyncTimer.EN
 CLK => VGA_SyncTimer:horizontalSyncTimer.CLK
@@ -37,6 +38,7 @@ Y[14] << Y[14].DB_MAX_OUTPUT_PORT_TYPE
 Y[15] << Y[15].DB_MAX_OUTPUT_PORT_TYPE
 VS << VGA_SyncTimer:verticalSyncTimer.sync
 HS << VGA_SyncTimer:horizontalSyncTimer.sync
+DONE << DONE.DB_MAX_OUTPUT_PORT_TYPE
 
 
 |VGA_Sync|VGA_SyncTimer:horizontalSyncTimer

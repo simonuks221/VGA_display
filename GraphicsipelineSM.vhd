@@ -9,7 +9,7 @@ RST: in std_logic;
 CLK : in std_logic;
 
 DONE_RASTERISATION: in std_logic;
-
+DONE_SYNC: in std_logic;
 EN_VGA: out std_logic;
 EN_RASTERISATION: out std_logic
 );
@@ -30,11 +30,13 @@ begin
 	end if;
 end process;
 
-process (state, DONE_RASTERISATION)
+process (state, DONE_RASTERISATION, DONE_SYNC)
 begin
 	case state is
 		when IDLE =>
-			nextState <= RASTERISING;
+			--nextState <= RASTERISING;
+			EN_VGA <= '0';
+			EN_RASTERISATION <= '0';
 		when RASTERISING =>
 			EN_RASTERISATION <= '1';
 			if Done_RASTERISATION = '1' then
@@ -44,7 +46,10 @@ begin
 		when DISPLAYING => 
 			EN_VGA <= '1';
 			EN_RASTERISATION <= '0';
-			--Do nothing for the time beeing
+			if DONE_SYNC = '1' then
+				EN_VGA <= '0';
+				nextState <= IDLE;
+			end if;
 		when others =>
 			nextState <= IDLE;
 			EN_RASTERISATION <= '0';
