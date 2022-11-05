@@ -7,6 +7,31 @@ import math
 zbuffer = [[1000]*600 for i in range(800)]
 
 
+def TextureCoords(R1, R2, R3, P):
+    detT = (R2[1]-R3[1])*(R1[0]-R3[0])+(R3[0]-R2[0])*(R1[1]-R3[1])
+    l1 = ((R2[1]-R3[1])*(P[0]-R3[0])+(R3[0]-R2[0])*(P[1]-R3[1]))/detT
+    l2 = ((R3[1]-R1[1])*(P[0]-R3[0])+(R1[0]-R3[0])*(P[1]-R3[1]))/detT
+    l3 = 1 - l1 - l2
+    detB = l1/R1[2]+l2/R2[2]+l3/R3[2]
+    B1 = (l1/R1[2])/detB
+    B2 = (l2/R2[2])/detB
+    B3 = (l3/R3[2])/detB
+    #u = l1 * R1[3] + l2 * R2[3] + l3 * R3[3]
+    #v = l1 * R1[4] + l2 * R2[4] + l3 * R3[4]
+
+    u = B1 * R1[3] + B2 * R2[3] + B3 * R3[3]
+    v = B1 * R1[4] + B2 * R2[4] + B3 * R3[4]
+    if u < 0 or v < 0:
+        return (0, 0)
+    if u > 1 or v > 1:
+        #print("ERROR: OVER 1 COLOR", u, v)
+        return (0, 0)
+    return (u, v)
+
+#print(k1, k1)
+# print(k2, k2)
+
+
 def lineIntersection(line1, givenX=-1, givenY=-1):
     # print(line1)
     if line1[1][0] < 0:
@@ -40,8 +65,109 @@ def lineIntersection(line1, givenX=-1, givenY=-1):
     return (int(x), int(y))
 
 
-def bLineOG(x0, y0, x1, y1, Z, screen, color):
+def drawPixel(x, y, z, V1, V2, V3, screen):
     global zbuffer
+    if zbuffer[x][y] > Z:
+        u, v = TextureCoords(V1, V2, V3, (x, y))
+        color = (0, 255 * v, 0)
+        pygame.draw.circle(screen, color, (x, y), 1)
+        zbuffer[x][y] = Z
+
+
+def line3D(P0, P1, screen, V1, V2, V3):
+    x0 = int(P0[0])
+    y0 = int(P0[1])
+    z0 = int(P0[2])
+    x1 = int(P1[0])
+    y1 = int(P1[1])
+    z1 = int(P1[2])
+    px = 0
+    py = 0
+    pz = 0
+
+    dx = x1 - x0
+    dy = y1 - y0
+    dz = z1 - z0
+    if dx < 0:
+        x_inc = -1
+    else:
+        x_inc = 1
+    if dy < 0:
+        y_inc = -1
+    else:
+        y_inc = 1
+    if dz < 0:
+        z_inc = -1
+    else:
+        z_inc = 1
+
+    l = abs(dx)
+    m = abs(dy)
+    n = abs(dz)
+    dx2 = l << 1
+    dy2 = m << 1
+    dz2 = n << 1
+
+    if ((l >= m) and (l >= n)):
+        err_1 = dy2 - l
+        err_2 = dz2 - l
+        for i in range(0, l):
+           # for (i=0; i < l; i++) {
+            # output -> getTileAt(point[0], point[1], point[2]) -> setSymbol(symbol)
+            drawPixel(px + x0, py + y0, pz + z0, V1, V2, V3, screen)
+            if (err_1 > 0):
+
+                py += y_inc
+                err_1 -= dx2
+            if (err_2 > 0):
+                pz += z_inc
+                err_2 -= dx2
+
+            err_1 += dy2
+            err_2 += dz2
+            px += x_inc
+
+    elif ((m >= l) and (m >= n)):
+        err_1 = dx2 - m
+        err_2 = dz2 - m
+        # for (i=0; i < m;i++) {
+        # output -> getTileAt(point[0], point[1], point[2]) -> setSymbol(symbol)
+
+        for i in range(0, m):
+            drawPixel(px + x0, py + y0, pz + z0, V1, V2, V3, screen)
+            if (err_1 > 0):
+                px += x_inc
+                err_1 -= dy2
+
+            if (err_2 > 0):
+                pz += z_inc
+                err_2 -= dy2
+
+            err_1 += dx2
+            err_2 += dz2
+            py += y_inc
+
+    else:
+        err_1 = dy2 - n
+        err_2 = dx2 - n
+        # for (i=0;i < n;i++) {
+        #    output -> getTileAt(point[0], point[1], point[2]) -> setSymbol(symbol)
+
+        for i in range(0, n):
+            drawPixel(px + x0, py + y0, pz + z0, V1, V2, V3, screen)
+            if (err_1 > 0):
+                py += y_inc
+                err_1 -= dz2
+            if (err_2 > 0):
+                px += x_inc
+                err_2 -= dz2
+            err_1 += dy2
+            err_2 += dx2
+            pz += z_inc
+    drawPixel(px + x0, py + y0, pz + z0, V1, V2, V3, screen)
+
+
+def bLineOG(x0, y0, x1, y1, Z, screen, V1, V2, V3):
     x0 = int(x0)
     y0 = int(y0)
     x1 = int(x1)
@@ -60,12 +186,7 @@ def bLineOG(x0, y0, x1, y1, Z, screen, color):
     error = dx + dy
 
     while True:
-        try:
-            if zbuffer[x0][y0] > Z:
-                pygame.draw.circle(screen, color, (x0, y0), 1)
-                zbuffer[x0][y0] = Z
-        except:
-            print("EXCEPTION", x0, y0)
+        drawPixel(x0, y0, Z, V1, V2, V3, screen)
         if x0 == x1 and y0 == y1:
             break
         e2 = 2 * error
@@ -82,11 +203,11 @@ def bLineOG(x0, y0, x1, y1, Z, screen, color):
             y0 = y0 + sy
 
 
-def bLine(x0, y0, x1, y1, oldY, screen):
-    x0 = int(x0)
-    y0 = int(y0)
-    x1 = int(x1)
-    y1 = int(y1)
+def bLine(P0, P1, oldY, screen):
+    x0 = int(P0[0])
+    y0 = int(P0[1])
+    x1 = int(P1[0])
+    y1 = int(P1[1])
 
     # lastY = y0
 
@@ -128,7 +249,7 @@ def takeSecond(elem):  # for sorting stuff
     return elem[1]
 
 
-def bTriangle(P1, P2, P3, Z, screen, color):
+def bTriangle(P1, P2, P3, Z, screen):
 
     Phigh = 0
     Pmid = 0
@@ -142,11 +263,11 @@ def bTriangle(P1, P2, P3, Z, screen, color):
     Plow = P[0]
 
     for newY in range(int(Phigh[1]), int(Pmid[1]), -1):
-        xx1, yy1 = bLine(int(Phigh[0]), int(Phigh[1]), int(
-            Plow[0]), int(Plow[1]), int(newY), screen)
-        xx2, yy2 = bLine(int(Phigh[0]), int(Phigh[1]), int(
-            Pmid[0]), int(Pmid[1]), int(newY), screen)
-        bLineOG(xx1, yy1, xx2, yy2, Z, screen, color)
+        xx1, yy1 = bLine(Phigh,
+                         Plow, int(newY), screen)
+        xx2, yy2 = bLine(Phigh,
+                         Pmid, int(newY), screen)
+        bLineOG(xx1, yy1, xx2, yy2, Z, screen, P1, P2, P3)
 
     if Plow[1] != Phigh[1]:
         P4 = [Phigh[0] +
@@ -155,12 +276,12 @@ def bTriangle(P1, P2, P3, Z, screen, color):
         P4 = Pmid
 
     for newY in range(int(Pmid[1]), int(Plow[1]), -1):
-        xx1, yy1 = bLine(int(P4[0]), int(P4[1]), int(
-            Plow[0]), int(Plow[1]), int(newY), screen)
-        xx2, yy2 = bLine(int(Pmid[0]), int(Pmid[1]), int(
-            Plow[0]), int(Plow[1]), int(newY), screen)
+        xx1, yy1 = bLine(P4,
+                         Plow, int(newY), screen)
+        xx2, yy2 = bLine(Pmid,
+                         Plow, int(newY), screen)
 
-        bLineOG(xx1, yy1, xx2, yy2, Z, screen, color)
+        bLineOG(xx1, yy1, xx2, yy2, Z, screen, P1, P2, P3)
 
 
 WHITE = (255, 255, 255)
@@ -177,21 +298,18 @@ circle_pos = [WIDTH/2, HEIGHT/2]  # x, y
 
 
 points = []
-
-colors = [[0, 0, 0], [0, 0, 0], [255, 0, 0],
-          [255, 0, 0], [0, 0, 255], [0, 0, 255], [0, 255, 255], [0, 255, 255], [155, 38, 182], [155, 38, 182]]
-
+tcoords = []
 
 # clockwise
 # back
-points.append(np.matrix([0, 0, 30]))
+'''points.append(np.matrix([0, 0, 30]))
 points.append(np.matrix([0, 20, 30]))
 points.append(np.matrix([20, 0, 30]))
 
 points.append(np.matrix([20, 0, 30]))
 points.append(np.matrix([0, 20, 30]))
 points.append(np.matrix([20, 20, 30]))
-
+'''
 
 # Right
 points.append(np.matrix([20, 0, 10]))
@@ -202,6 +320,14 @@ points.append(np.matrix([20, 0, 30]))
 points.append(np.matrix([20, 20, 30]))
 points.append(np.matrix([20, 20, 10]))
 
+tcoords.append((0, 0))
+tcoords.append((1, 0))
+tcoords.append((0, 1))
+
+tcoords.append((1, 0))
+tcoords.append((1, 1))
+tcoords.append((0, 1))
+
 # front
 points.append(np.matrix([0, 0, 10]))
 points.append(np.matrix([20, 0, 10]))
@@ -211,8 +337,17 @@ points.append(np.matrix([20, 0, 10]))
 points.append(np.matrix([20, 20, 10]))
 points.append(np.matrix([0, 20, 10]))
 
+tcoords.append((0, 0))
+tcoords.append((1, 0))
+tcoords.append((0, 1))
+
+tcoords.append((1, 0))
+tcoords.append((1, 1))
+tcoords.append((0, 1))
+
+
 # Left
-points.append(np.matrix([0, 0, 10]))
+'''points.append(np.matrix([0, 0, 10]))
 points.append(np.matrix([0, 20, 10]))
 points.append(np.matrix([0, 0, 30]))
 
@@ -229,7 +364,7 @@ points.append(np.matrix([20, 0, 10]))
 
 points.append(np.matrix([0, 0, 30]))
 points.append(np.matrix([20, 0, 30]))
-points.append(np.matrix([20, 0, 10]))
+points.append(np.matrix([20, 0, 10]))'''
 
 
 '''points.append(np.matrix([-10, 10, 10]))
@@ -258,7 +393,7 @@ projected_points = [
 
 cx = 0
 cy = 0  # camerapos
-cz = 0
+cz = -50
 
 ex = 100
 ey = 100  # display surface
@@ -310,9 +445,9 @@ while True:
             cy += playerSpeed
 
         if pressed[pygame.K_q]:
-            ez -= 0.1
+            anglez += 1/180*pi
         if pressed[pygame.K_e]:
-            ez += 0.1
+            anglez -= 1/180*pi
         # print(2 * atan(1/e[2]))
 
         if pressed[pygame.K_UP]:
@@ -376,7 +511,7 @@ while True:
                 break
             bx = ez/dz*dx + ex
             by = ez/dz*dy + ey
-            drawPoints.append([bx, by])
+            drawPoints.append([bx, by, dz, tcoords[i+y][0], tcoords[i+y][1]])
 
         if (len(drawPoints) == 3):
             X1 = (drawPoints[1][0] - drawPoints[0][0]) * \
@@ -410,10 +545,10 @@ while True:
                         (goodvertex0, badvertex0), -1, -1)
                     newx1, newy1 = lineIntersection(
                         (goodvertex1, badvertex0), -1, -1)
-                    bTriangle(goodvertex0, (newx0, newy0), goodvertex1,
-                              Z, screen, colors[int(i/3)])
+                    bTriangle(goodvertex0, (newx0, newy0), goodvertex1,  # nera teksturu koordinaciu cia ir toliau
+                              Z, screen)
                     bTriangle((newx1, newy1), (newx0, newy0), goodvertex1,
-                              Z, screen, colors[int(i/3)])
+                              Z, screen)
                     continue
                 elif verticiesOutside == 2:  # 2 vertices over board, one good
                     newx0, newy0 = lineIntersection(
@@ -421,14 +556,14 @@ while True:
                     newx1, newy1 = lineIntersection(
                         (goodvertex0, badvertex1), -1, -1)
                     bTriangle(goodvertex0, (newx0, newy0), (newx1, newy1),
-                              Z, screen, colors[int(i/3)])
+                              Z, screen)
 
                     continue
                 elif verticiesOutside == 3:
                     continue
                 else:  # all good
                     bTriangle(drawPoints[0], drawPoints[1],
-                              drawPoints[2], Z, screen, colors[int(i/3)])
+                              drawPoints[2], Z, screen)
                 '''pygame.draw.circle(
                     screen, BLACK, (drawPoints[0][0], drawPoints[0][1]), 5)
                 pygame.draw.circle(
