@@ -12,10 +12,17 @@ def TextureCoords(R1, R2, R3, P):
     l1 = ((R2[1]-R3[1])*(P[0]-R3[0])+(R3[0]-R2[0])*(P[1]-R3[1]))/detT
     l2 = ((R3[1]-R1[1])*(P[0]-R3[0])+(R1[0]-R3[0])*(P[1]-R3[1]))/detT
     l3 = 1 - l1 - l2
-    detB = l1/R1[2]+l2/R2[2]+l3/R3[2]
-    B1 = (l1/R1[2])/detB
-    B2 = (l2/R2[2])/detB
-    B3 = (l3/R3[2])/detB
+    #print(R1[2], R2[2], R3[3])
+    if R1[2] == 0 or R2[2] == 0 or R3[2] == 0:
+        detB = 1
+        B1 = 1
+        B2 = 1
+        B3 = 1
+    else:
+        detB = l1/R1[2]+l2/R2[2]+l3/R3[2]
+        B1 = (l1/R1[2])/detB  # depth shit
+        B2 = (l2/R2[2])/detB
+        B3 = (l3/R3[2])/detB
     #u = l1 * R1[3] + l2 * R2[3] + l3 * R3[3]
     #v = l1 * R1[4] + l2 * R2[4] + l3 * R3[4]
 
@@ -24,12 +31,8 @@ def TextureCoords(R1, R2, R3, P):
     if u < 0 or v < 0:
         return (0, 0)
     if u > 1 or v > 1:
-        #print("ERROR: OVER 1 COLOR", u, v)
         return (0, 0)
     return (u, v)
-
-#print(k1, k1)
-# print(k2, k2)
 
 
 def lineIntersection(line1, givenX=-1, givenY=-1):
@@ -48,7 +51,6 @@ def lineIntersection(line1, givenX=-1, givenY=-1):
             return (int(givenX), int(line1[0][1]))
         else:  # find x
             return (int(line1[0][0]), int(givenY))
-            return
 
     a1 = (line1[0][1] - line1[1][1])/(line1[0][0] - line1[1][0])  # y1-y2/x1-x2
     b1 = line1[0][1]-(a1*line1[0][0])  # y1 - ax
@@ -61,7 +63,6 @@ def lineIntersection(line1, givenX=-1, givenY=-1):
         x = (givenY - b1)/a1
        # x = (b2 - b1)/(a1+a2)
         #y = a1 * x + b1
-
     return (int(x), int(y))
 
 
@@ -69,12 +70,14 @@ def drawPixel(x, y, z, V1, V2, V3, screen):
     global zbuffer
     if zbuffer[x][y] > Z:
         u, v = TextureCoords(V1, V2, V3, (x, y))
-        color = (0, 255 * v, 0)
+        color = (255 * z/100, 0, 0)
+        if color[0] > 255:
+            color = (255, 0, 0)
         pygame.draw.circle(screen, color, (x, y), 1)
         zbuffer[x][y] = Z
 
 
-def line3D(P0, P1, screen, V1, V2, V3):
+def line3DDraw(P0, P1, screen, V1, V2, V3):
     x0 = int(P0[0])
     y0 = int(P0[1])
     z0 = int(P0[2])
@@ -112,8 +115,6 @@ def line3D(P0, P1, screen, V1, V2, V3):
         err_1 = dy2 - l
         err_2 = dz2 - l
         for i in range(0, l):
-           # for (i=0; i < l; i++) {
-            # output -> getTileAt(point[0], point[1], point[2]) -> setSymbol(symbol)
             drawPixel(px + x0, py + y0, pz + z0, V1, V2, V3, screen)
             if (err_1 > 0):
 
@@ -130,9 +131,6 @@ def line3D(P0, P1, screen, V1, V2, V3):
     elif ((m >= l) and (m >= n)):
         err_1 = dx2 - m
         err_2 = dz2 - m
-        # for (i=0; i < m;i++) {
-        # output -> getTileAt(point[0], point[1], point[2]) -> setSymbol(symbol)
-
         for i in range(0, m):
             drawPixel(px + x0, py + y0, pz + z0, V1, V2, V3, screen)
             if (err_1 > 0):
@@ -150,9 +148,6 @@ def line3D(P0, P1, screen, V1, V2, V3):
     else:
         err_1 = dy2 - n
         err_2 = dx2 - n
-        # for (i=0;i < n;i++) {
-        #    output -> getTileAt(point[0], point[1], point[2]) -> setSymbol(symbol)
-
         for i in range(0, n):
             drawPixel(px + x0, py + y0, pz + z0, V1, V2, V3, screen)
             if (err_1 > 0):
@@ -167,89 +162,99 @@ def line3D(P0, P1, screen, V1, V2, V3):
     drawPixel(px + x0, py + y0, pz + z0, V1, V2, V3, screen)
 
 
-def bLineOG(x0, y0, x1, y1, Z, screen, V1, V2, V3):
-    x0 = int(x0)
-    y0 = int(y0)
-    x1 = int(x1)
-    y1 = int(y1)
-
-    dx = abs(x1 - x0)
-    if x0 < x1:
-        sx = 1
-    else:
-        sx = -1
-    dy = -abs(y1 - y0)
-    if y0 < y1:
-        sy = 1
-    else:
-        sy = -1
-    error = dx + dy
-
-    while True:
-        drawPixel(x0, y0, Z, V1, V2, V3, screen)
-        if x0 == x1 and y0 == y1:
-            break
-        e2 = 2 * error
-        if e2 >= dy:
-            if x0 == x1:
-                break
-            error = error + dy
-            x0 = x0 + sx
-
-        if e2 <= dx:
-            if y0 == y1:
-                break
-            error = error + dx
-            y0 = y0 + sy
-
-
-def bLine(P0, P1, oldY, screen):
+def line3DSides(P0, P1, lastY):
     x0 = int(P0[0])
     y0 = int(P0[1])
+    z0 = int(P0[2])
     x1 = int(P1[0])
     y1 = int(P1[1])
+    z1 = int(P1[2])
+    px = 0
+    py = 0
+    pz = 0
 
-    # lastY = y0
-
-    dx = abs(x1 - x0)
-    if x0 < x1:
-        sx = 1
+    dx = x1 - x0
+    dy = y1 - y0
+    dz = z1 - z0
+    if dx < 0:
+        x_inc = -1
     else:
-        sx = -1
-    dy = -abs(y1 - y0)
-    if y0 < y1:
-        sy = 1
+        x_inc = 1
+    if dy < 0:
+        y_inc = -1
     else:
-        sy = -1
-    error = dx + dy
+        y_inc = 1
+    if dz < 0:
+        z_inc = -1
+    else:
+        z_inc = 1
 
-    while True:
+    l = abs(dx)
+    m = abs(dy)
+    n = abs(dz)
+    dx2 = l << 1
+    dy2 = m << 1
+    dz2 = n << 1
 
-        if int(y0) == oldY:
-            break
+    if ((l >= m) and (l >= n)):
+        err_1 = dy2 - l
+        err_2 = dz2 - l
+        for i in range(0, l):
+            if (err_1 > 0):
 
-        if x0 == x1 and y0 == y1:
-            break
-        e2 = 2 * error
-        if e2 >= dy:
-            if x0 == x1:
+                py += y_inc
+                err_1 -= dx2
+            if (err_2 > 0):
+                pz += z_inc
+                err_2 -= dx2
+
+            err_1 += dy2
+            err_2 += dz2
+            px += x_inc
+            if lastY == py + y0:
                 break
-            error = error + dy
-            x0 = x0 + sx
 
-        if e2 <= dx:
-            if y0 == y1:
+    elif ((m >= l) and (m >= n)):
+        err_1 = dx2 - m
+        err_2 = dz2 - m
+        for i in range(0, m):
+            if (err_1 > 0):
+                px += x_inc
+                err_1 -= dy2
+
+            if (err_2 > 0):
+                pz += z_inc
+                err_2 -= dy2
+
+            err_1 += dx2
+            err_2 += dz2
+            py += y_inc
+            if lastY == py + y0:
                 break
-            error = error + dx
-            y0 = y0 + sy
-    return x0, y0
+
+    else:
+        err_1 = dy2 - n
+        err_2 = dx2 - n
+        for i in range(0, n):
+            if (err_1 > 0):
+                py += y_inc
+                err_1 -= dz2
+            if (err_2 > 0):
+                px += x_inc
+                err_2 -= dz2
+            err_1 += dy2
+            err_2 += dx2
+            pz += z_inc
+            if lastY == py + y0:
+                break
+    return px + x0, py + y0, pz + z0
 
 
 def takeSecond(elem):  # for sorting stuff
     return elem[1]
 
 
-def bTriangle(P1, P2, P3, Z, screen):
+def bTriangle(P1, P2, P3, screen):
 
     Phigh = 0
     Pmid = 0
@@ -263,25 +268,34 @@ def bTriangle(P1, P2, P3, Z, screen):
     Plow = P[0]
 
     for newY in range(int(Phigh[1]), int(Pmid[1]), -1):
-        xx1, yy1 = bLine(Phigh,
-                         Plow, int(newY), screen)
-        xx2, yy2 = bLine(Phigh,
-                         Pmid, int(newY), screen)
-        bLineOG(xx1, yy1, xx2, yy2, Z, screen, P1, P2, P3)
+        xx1, yy1, zz1 = line3DSides(Phigh, Plow, int(newY))
+        xx2, yy2, zz2 = line3DSides(Phigh, Pmid, int(newY))
+        # xx1, yy1 = bLine(Phigh,
+        #                 Plow, int(newY), screen)
+        # xx2, yy2 = bLine(Phigh,
+        #                 Pmid, int(newY), screen)
+        #bLineOG(xx1, yy1, xx2, yy2, Z, screen, P1, P2, P3)
+        line3DDraw((xx1, yy1, zz1), (xx2, yy2, zz2), screen, P1, P2, P3)
 
     if Plow[1] != Phigh[1]:
+        newZ = -(Phigh[1]-Pmid[1])/(Phigh[1] - Plow[1]) * \
+            (Phigh[2] - Plow[2]) + Phigh[2]
+        #print(Plow, Pmid, Phigh, newZ)
         P4 = [Phigh[0] +
-              ((Pmid[1]-Phigh[1])/(Plow[1]-Phigh[1])) * (Plow[0]-Phigh[0]), Pmid[1]]
+              ((Pmid[1]-Phigh[1])/(Plow[1]-Phigh[1])) * (Plow[0]-Phigh[0]), Pmid[1], newZ]  # 0 - z coord
     else:
         P4 = Pmid
 
     for newY in range(int(Pmid[1]), int(Plow[1]), -1):
-        xx1, yy1 = bLine(P4,
-                         Plow, int(newY), screen)
-        xx2, yy2 = bLine(Pmid,
-                         Plow, int(newY), screen)
-
-        bLineOG(xx1, yy1, xx2, yy2, Z, screen, P1, P2, P3)
+        # xx1, yy1 = bLine(P4,
+        #                 Plow, int(newY), screen)
+        # xx2, yy2 = bLine(Pmid,
+        #                 Plow, int(newY), screen)
+        #line3D((xx1, yy1), (xx2, yy2), screen, P1, P2, P3)
+        #bLineOG(xx1, yy1, xx2, yy2, Z, screen, P1, P2, P3)
+        xx1, yy1, zz1 = line3DSides(P4, Plow, int(newY))
+        xx2, yy2, zz2 = line3DSides(Pmid, Plow, int(newY))
+        line3DDraw((xx1, yy1, zz1), (xx2, yy2, zz2), screen, P1, P2, P3)
 
 
 WHITE = (255, 255, 255)
@@ -383,13 +397,6 @@ projection_matrix = np.matrix([
 projected_points = [
     [n, n] for n in range(len(points))
 ]
-
-
-# def connect_points(i, j, points):
-# print()
-# pygame.draw.line(
-#    screen, BLACK, (points[i][0], points[i][1]), (points[j][0], points[j][1]))
-
 
 cx = 0
 cy = 0  # camerapos
@@ -545,30 +552,27 @@ while True:
                         (goodvertex0, badvertex0), -1, -1)
                     newx1, newy1 = lineIntersection(
                         (goodvertex1, badvertex0), -1, -1)
-                    bTriangle(goodvertex0, (newx0, newy0), goodvertex1,  # nera teksturu koordinaciu cia ir toliau
-                              Z, screen)
-                    bTriangle((newx1, newy1), (newx0, newy0), goodvertex1,
-                              Z, screen)
+                    print("a", goodvertex0, goodvertex1)
+                    # bTriangle(goodvertex0, (newx0, newy0, 100, 1, 1),
+                    #          goodvertex1, screen)
+                    # bTriangle((newx1, newy1, 1, 1), (newx0, newy0, 100, 1, 1),
+                    #          goodvertex1, screen)
                     continue
                 elif verticiesOutside == 2:  # 2 vertices over board, one good
                     newx0, newy0 = lineIntersection(
                         (goodvertex0, badvertex0), -1, -1)
                     newx1, newy1 = lineIntersection(
                         (goodvertex0, badvertex1), -1, -1)
-                    bTriangle(goodvertex0, (newx0, newy0), (newx1, newy1),
-                              Z, screen)
+                    print("b")
+                    # bTriangle(goodvertex0, (newx0, newy0, 100, 1, 1),
+                    #          (newx1, newy1, 100, 1, 1), screen)
 
                     continue
                 elif verticiesOutside == 3:
                     continue
                 else:  # all good
+                    # print(draw)
                     bTriangle(drawPoints[0], drawPoints[1],
-                              drawPoints[2], Z, screen)
-                '''pygame.draw.circle(
-                    screen, BLACK, (drawPoints[0][0], drawPoints[0][1]), 5)
-                pygame.draw.circle(
-                    screen, BLACK, (drawPoints[1][0], drawPoints[1][1]), 5)
-                pygame.draw.circle(
-                    screen, BLACK, (drawPoints[2][0], drawPoints[2][1]), 5)'''
+                              drawPoints[2], screen)
 
     pygame.display.update()
