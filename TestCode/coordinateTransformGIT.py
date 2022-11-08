@@ -7,12 +7,18 @@ import math
 zbuffer = [[1000]*600 for i in range(800)]
 
 
+def getMiddleZ(Phigh, Pmid, Plow):
+    if (Phigh[1] - Plow[1]) == 0:
+        return Phigh[2]
+    return -(Phigh[1]-Pmid[1])/(Phigh[1] - Plow[1]) * \
+            (Phigh[2] - Plow[2]) + Phigh[2]
+
+
 def TextureCoords(R1, R2, R3, P):
     detT = (R2[1]-R3[1])*(R1[0]-R3[0])+(R3[0]-R2[0])*(R1[1]-R3[1])
     l1 = ((R2[1]-R3[1])*(P[0]-R3[0])+(R3[0]-R2[0])*(P[1]-R3[1]))/detT
     l2 = ((R3[1]-R1[1])*(P[0]-R3[0])+(R1[0]-R3[0])*(P[1]-R3[1]))/detT
     l3 = 1 - l1 - l2
-    #print(R1[2], R2[2], R3[3])
     if R1[2] == 0 or R2[2] == 0 or R3[2] == 0:
         detB = 1
         B1 = 1
@@ -23,11 +29,12 @@ def TextureCoords(R1, R2, R3, P):
         B1 = (l1/R1[2])/detB  # depth shit
         B2 = (l2/R2[2])/detB
         B3 = (l3/R3[2])/detB
-    #u = l1 * R1[3] + l2 * R2[3] + l3 * R3[3]
-    #v = l1 * R1[4] + l2 * R2[4] + l3 * R3[4]
 
     u = B1 * R1[3] + B2 * R2[3] + B3 * R3[3]
-    v = B1 * R1[4] + B2 * R2[4] + B3 * R3[4]
+    try:
+        v = B1 * R1[4] + B2 * R2[4] + B3 * R3[4]
+    except:
+        print(R1, R2, R3)
     if u < 0 or v < 0:
         return (0, 0)
     if u > 1 or v > 1:
@@ -61,20 +68,18 @@ def lineIntersection(line1, givenX=-1, givenY=-1):
     else:  # find x
         y = givenY
         x = (givenY - b1)/a1
-       # x = (b2 - b1)/(a1+a2)
-        #y = a1 * x + b1
     return (int(x), int(y))
 
 
 def drawPixel(x, y, z, V1, V2, V3, screen):
     global zbuffer
-    if zbuffer[x][y] > Z:
+    if zbuffer[x][y] > z:
         u, v = TextureCoords(V1, V2, V3, (x, y))
         color = (255 * z/100, 0, 0)
         if color[0] > 255:
             color = (255, 0, 0)
         pygame.draw.circle(screen, color, (x, y), 1)
-        zbuffer[x][y] = Z
+        zbuffer[x][y] = z
 
 
 def line3DDraw(P0, P1, screen, V1, V2, V3):
@@ -270,37 +275,20 @@ def bTriangle(P1, P2, P3, screen):
     for newY in range(int(Phigh[1]), int(Pmid[1]), -1):
         xx1, yy1, zz1 = line3DSides(Phigh, Plow, int(newY))
         xx2, yy2, zz2 = line3DSides(Phigh, Pmid, int(newY))
-        # xx1, yy1 = bLine(Phigh,
-        #                 Plow, int(newY), screen)
-        # xx2, yy2 = bLine(Phigh,
-        #                 Pmid, int(newY), screen)
-        #bLineOG(xx1, yy1, xx2, yy2, Z, screen, P1, P2, P3)
         line3DDraw((xx1, yy1, zz1), (xx2, yy2, zz2), screen, P1, P2, P3)
 
     if Plow[1] != Phigh[1]:
-        newZ = -(Phigh[1]-Pmid[1])/(Phigh[1] - Plow[1]) * \
-            (Phigh[2] - Plow[2]) + Phigh[2]
-        #print(Plow, Pmid, Phigh, newZ)
+        newZ = getMiddleZ(Phigh, Pmid, Plow)
         P4 = [Phigh[0] +
               ((Pmid[1]-Phigh[1])/(Plow[1]-Phigh[1])) * (Plow[0]-Phigh[0]), Pmid[1], newZ]  # 0 - z coord
     else:
         P4 = Pmid
 
     for newY in range(int(Pmid[1]), int(Plow[1]), -1):
-        # xx1, yy1 = bLine(P4,
-        #                 Plow, int(newY), screen)
-        # xx2, yy2 = bLine(Pmid,
-        #                 Plow, int(newY), screen)
-        #line3D((xx1, yy1), (xx2, yy2), screen, P1, P2, P3)
-        #bLineOG(xx1, yy1, xx2, yy2, Z, screen, P1, P2, P3)
         xx1, yy1, zz1 = line3DSides(P4, Plow, int(newY))
         xx2, yy2, zz2 = line3DSides(Pmid, Plow, int(newY))
-        line3DDraw((xx1, yy1, zz1), (xx2, yy2, zz2), screen, P1, P2, P3)
+        line3DDraw((xx1, yy1, zz1), (xx2, yy2, zz2), screen, Phigh, Pmid, Plow)
 
-
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-BLACK = (0, 0, 0)
 
 WIDTH, HEIGHT = 800, 600
 pygame.display.set_caption("3D projection in pygame!")
@@ -326,13 +314,13 @@ points.append(np.matrix([20, 20, 30]))
 '''
 
 # Right
-points.append(np.matrix([20, 0, 10]))
-points.append(np.matrix([20, 0, 30]))
-points.append(np.matrix([20, 20, 10]))
+points.append([20, 0, 10])
+points.append([20, 0, 30])
+points.append([20, 20, 10])
 
-points.append(np.matrix([20, 0, 30]))
-points.append(np.matrix([20, 20, 30]))
-points.append(np.matrix([20, 20, 10]))
+points.append([20, 0, 30])
+points.append([20, 20, 30])
+points.append([20, 20, 10])
 
 tcoords.append((0, 0))
 tcoords.append((1, 0))
@@ -343,13 +331,13 @@ tcoords.append((1, 1))
 tcoords.append((0, 1))
 
 # front
-points.append(np.matrix([0, 0, 10]))
-points.append(np.matrix([20, 0, 10]))
-points.append(np.matrix([0, 20, 10]))
+points.append([0, 0, 10])
+points.append([20, 0, 10])
+points.append([0, 20, 10])
 
-points.append(np.matrix([20, 0, 10]))
-points.append(np.matrix([20, 20, 10]))
-points.append(np.matrix([0, 20, 10]))
+points.append([20, 0, 10])
+points.append([20, 20, 10])
+points.append([0, 20, 10])
 
 tcoords.append((0, 0))
 tcoords.append((1, 0))
@@ -387,20 +375,9 @@ points.append(np.matrix([10, -10, 20]))
 points.append(np.matrix([10, 10, 20]))
 points.append(np.matrix([-10, 10, 20]))'''
 
-
-projection_matrix = np.matrix([
-    [1, 0, 0],
-    [0, 1, 0],
-])
-
-
-projected_points = [
-    [n, n] for n in range(len(points))
-]
-
-cx = 0
-cy = 0  # camerapos
-cz = -50
+ccx = 1
+ccy = 1  # camerapos
+ccz = 1
 
 ex = 100
 ey = 100  # display surface
@@ -439,17 +416,17 @@ while True:
             exit()
         pressed = pygame.key.get_pressed()
         if pressed[pygame.K_w]:
-            cz += playerSpeed
+            ccz += playerSpeed
         if pressed[pygame.K_s]:
-            cz -= playerSpeed
+            ccz -= playerSpeed
         if pressed[pygame.K_a]:
-            cx -= playerSpeed
+            ccx -= playerSpeed
         if pressed[pygame.K_d]:
-            cx += playerSpeed
+            ccx += playerSpeed
         if pressed[pygame.K_z]:
-            cy -= playerSpeed
+            ccy -= playerSpeed
         if pressed[pygame.K_x]:
-            cy += playerSpeed
+            ccy += playerSpeed
 
         if pressed[pygame.K_q]:
             anglez += 1/180*pi
@@ -471,54 +448,35 @@ while True:
             pygame.quit()
             exit()
 
-    # update stuff
-
-    rotation_z = np.matrix([
-        [cos(anglez), -sin(anglez), 0],
-        [sin(anglez), cos(anglez), 0],
-        [0, 0, 1],
-    ])
-
-    rotation_y = np.matrix([
-        [cos(angley), 0, sin(angley)],
-        [0, 1, 0],
-        [-sin(angley), 0, cos(angley)],
-    ])
-
-    rotation_x = np.matrix([
-        [1, 0, 0],
-        [0, cos(anglex), -sin(anglex)],
-        [0, sin(anglex), cos(anglex)],
-    ])
-
-    # angle += 0.01
-
-    screen.fill(WHITE)
+    screen.fill((255, 255, 255))
     # drawining stuff
 
     for i in range(0, len(points), 3):
         drawPoints = []
         Z = 1000
-        for y in range(0, 3):
-            rotated2d = points[i + y].reshape((3, 1))
-            carray = np.matrix([[cx], [cy], [cz]])
-            rotated2d = rotated2d - carray
-            rotated2d = np.dot(rotation_z, rotated2d)
-            rotated2d = np.dot(rotation_y, rotated2d)
-            rotated2d = np.dot(rotation_x, rotated2d)
+        for yy in range(0, 3):
+            x = points[i+yy][0] - ccx
+            # print(points[i+yy])
+            y = points[i+yy][1] - ccy
+            z = points[i+yy][2] - ccz
+            cx = cos(anglex)
+            cy = cos(angley)
+            cz = cos(anglez)
+            sx = sin(anglex)
+            sy = sin(angley)
+            sz = sin(anglez)
 
-            dx = int(rotated2d[0][0])
-            dy = int(rotated2d[1][0])
-            dz = int(rotated2d[2][0])
-
-            Z = dz
+            dx = cy*(sz * y + cz * x) - sy*z
+            dy = sx*(cy * z + sy*(sz*y+cz*x)) + cx*(cz*y-sz*x)
+            dz = cx*(cy*z+sy*(sz*y+cz*x)) - sx*(cz*y-sz*x)
 
             if dz <= 0:  # behind camera
                 drawPoints.clear()
                 break
             bx = ez/dz*dx + ex
             by = ez/dz*dy + ey
-            drawPoints.append([bx, by, dz, tcoords[i+y][0], tcoords[i+y][1]])
+            print(points[i+yy], bx, by, dz, dx, dy)
+            drawPoints.append([bx, by, dz, tcoords[i+yy][0], tcoords[i+yy][1]])
 
         if (len(drawPoints) == 3):
             X1 = (drawPoints[1][0] - drawPoints[0][0]) * \
@@ -552,26 +510,30 @@ while True:
                         (goodvertex0, badvertex0), -1, -1)
                     newx1, newy1 = lineIntersection(
                         (goodvertex1, badvertex0), -1, -1)
-                    print("a", goodvertex0, goodvertex1)
-                    # bTriangle(goodvertex0, (newx0, newy0, 100, 1, 1),
-                    #          goodvertex1, screen)
-                    # bTriangle((newx1, newy1, 1, 1), (newx0, newy0, 100, 1, 1),
-                    #          goodvertex1, screen)
+                    print(goodvertex1, badvertex0)
+                    newz0 = getMiddleZ(goodvertex0, (newx0, newy0), badvertex0)
+
+                    newz1 = getMiddleZ(goodvertex1, (newx1, newy1), badvertex0)
+                    print(newz1)
+                    bTriangle(goodvertex0, (newx0, newy0, newz0, 1, 1),
+                              goodvertex1, screen)
+                    bTriangle((newx1, newy1, 100, 1, 1), (newx0, newy0, newz1, 1, 1),
+                              goodvertex1, screen)
                     continue
                 elif verticiesOutside == 2:  # 2 vertices over board, one good
                     newx0, newy0 = lineIntersection(
                         (goodvertex0, badvertex0), -1, -1)
+                    newz0 = getMiddleZ(goodvertex0, (newx0, newy0), badvertex0)
                     newx1, newy1 = lineIntersection(
                         (goodvertex0, badvertex1), -1, -1)
-                    print("b")
-                    # bTriangle(goodvertex0, (newx0, newy0, 100, 1, 1),
-                    #          (newx1, newy1, 100, 1, 1), screen)
+                    newz1 = getMiddleZ(goodvertex0, (newx1, newy1), badvertex1)
+                    bTriangle(goodvertex0, (newx0, newy0, newz0, 1, 1),
+                              (newx1, newy1, newz1, 1, 1), screen)
 
                     continue
                 elif verticiesOutside == 3:
                     continue
                 else:  # all good
-                    # print(draw)
                     bTriangle(drawPoints[0], drawPoints[1],
                               drawPoints[2], screen)
 

@@ -46,14 +46,13 @@ begin
 horizontalSyncTimer : VGA_SyncTimer generic map(resolution => 640, frontPorch => 16, syncPulse => 96, backPorch => 48) port map(EN => EN, CLK => CLK, pixel => horizontal, sync => HS, nextLine => horizontalNextLine);
 verticalSyncTimer : VGA_SyncTimer generic map(resolution => 480, frontPorch => 11, syncPulse => 2, backPorch => 33) port map(EN => horizontalNextLine,CLK => CLK, pixel => vertical, sync => VS, nextLine => verticalNextLine);
 
-process
+process(CLK, EN)
 begin
-	wait on CLK, EN;
 	if EN = '0' then
 		horizontalDone <= 0;
 	elsif rising_edge(CLK) then
 		if EN = '1' and to_integer(unsigned(vertical)) = 0 and horizontalDone > 10 then
-			wait until rising_edge(CLK);
+			--wait until rising_edge(CLK);
 			--DONE <= '1';
 		else
 			DONE <= '0';
